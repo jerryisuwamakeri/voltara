@@ -110,10 +110,10 @@ export default function HeroSection() {
         {/* Stats row */}
         <div className="flex flex-wrap items-center justify-center gap-10 sm:gap-16">
           {[
-            { label: "Happy Customers", value: "2,500+" },
-            { label: "MW Installed",    value: "50+" },
+            { label: "Happy Customers", value: "50+"    },
+            { label: "kVA Installed",   value: "250"   },
             { label: "System Uptime",   value: "99.9%" },
-            { label: "Tons CO₂ Saved",  value: "75k" },
+            { label: "Office Locations",value: "6"     },
           ].map((item) => (
             <div key={item.label} className="text-center">
               <div

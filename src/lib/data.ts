@@ -4,10 +4,10 @@ export const PHONE_SUPPORT = "08108173958";
 export const EMAIL = "voltaraenergies@gmail.com";
 
 export const STATS = [
-  { value: "500+", label: "Happy Customers", icon: "users" },
-  { value: "50MW+", label: "Solar Installed", icon: "zap" },
+  { value: "50+", label: "Happy Customers", icon: "users" },
+  { value: "250kVA", label: "Solar Installed", icon: "zap" },
   { value: "99.9%", label: "System Uptime", icon: "activity" },
-  { value: "4", label: "Office Locations", icon: "leaf" },
+  { value: "6", label: "Office Locations", icon: "leaf" },
 ];
 
 export const NAV_LINKS = [
@@ -470,26 +470,12 @@ export const WHY_VOLTARA = [
 ];
 
 export const OFFICES = [
-  {
-    city: "Lagos",
-    address: "New road Ibeju Lekki, Lagos",
-    label: "Head Office",
-  },
-  {
-    city: "Oyo / Ibadan",
-    address: "Suite 10 Nikem plaza opp. NNPC Apata, Ibadan Oyo",
-    label: "Branch Office",
-  },
-  {
-    city: "Abuja",
-    address: "No 11 Prince Ebosele Crescent, Dutse, Abuja",
-    label: "Branch Office",
-  },
-  {
-    city: "Ondo / Akure",
-    address: "Zion City Estate, Beside FUTA Northgate, Akure",
-    label: "Branch Office",
-  },
+  { city: "Lagos",        address: "New road Ibeju Lekki, Lagos",                              label: "Head Office"   },
+  { city: "Abuja",        address: "No 11 Prince Ebosele Crescent, Dutse, Abuja",              label: "Branch Office" },
+  { city: "Oyo / Ibadan", address: "Suite 11 Nikem plaza opp. NNPC Depot Apata, Ibadan",       label: "Branch Office" },
+  { city: "Ondo / Akure", address: "Zion City Estate, Beside FUTA Northgate, Akure",           label: "Branch Office" },
+  { city: "Ogun / Abeokuta", address: "Pansheke, Abeokuta, Ogun State",                        label: "Branch Office" },
+  { city: "Ekiti",        address: "Isaba, Ikole Ekiti, Ekiti State",                          label: "Branch Office" },
 ];
 
 export const COMMON_APPLIANCES = [

@@ -22,7 +22,7 @@ export default function CTASection() {
               Ready to go solar with VOLTARA?
             </h2>
             <p className="max-w-xl mx-auto text-base mb-10" style={{ color: "rgba(255,255,255,0.6)" }}>
-              Join 2,500+ homes and businesses already powered by clean, reliable solar energy across Nigeria.
+              Join 50+ homes and businesses already powered by clean, reliable solar energy across Nigeria.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

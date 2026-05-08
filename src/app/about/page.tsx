@@ -178,10 +178,10 @@ export default function AboutPage() {
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { value: "2,500+", label: "Happy Customers",   sub: "Homes & businesses powered" },
-              { value: "50MW+",  label: "Solar Capacity",    sub: "Clean energy installed" },
+              { value: "50+",    label: "Happy Customers",   sub: "Homes & businesses powered" },
+              { value: "250kVA", label: "Solar Installed",   sub: "Clean energy deployed" },
               { value: "99.9%",  label: "System Uptime",     sub: "Reliable performance" },
-              { value: "75,000", label: "Tons CO₂ Saved",    sub: "Environmental impact" },
+              { value: "6",      label: "Office Locations",  sub: "Across Nigeria" },
             ].map((s) => (
               <div
                 key={s.label}
