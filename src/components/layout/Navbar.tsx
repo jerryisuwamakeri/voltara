@@ -97,14 +97,14 @@ export default function Navbar() {
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center gap-3">
               <a
-                href="https://wa.me/2349131921437"
+                href="https://wa.me/2349131797237"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 text-sm font-medium transition-colors duration-200"
                 style={{ color: solid ? "#6b7280" : "rgba(255,255,255,0.75)" }}
               >
                 <Phone className="w-3.5 h-3.5" />
-                +234 913 192 1437
+                09131797237
               </a>
               <Link
                 href="/packages"
@@ -200,14 +200,14 @@ export default function Navbar() {
               View Solar Packages
             </Link>
             <a
-              href="https://wa.me/2349131921437"
+              href="https://wa.me/2349131797237"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 py-3 text-sm font-medium rounded-xl"
               style={{ backgroundColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)" }}
             >
               <Phone className="w-4 h-4" />
-              WhatsApp: +234 913 192 1437
+              WhatsApp: 09131797237
             </a>
             <p className="text-center text-xs mt-3" style={{ color: "rgba(255,255,255,0.35)" }}>
               Mon – Sat &middot; 8am – 6pm

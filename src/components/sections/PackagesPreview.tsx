@@ -2,8 +2,23 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, ArrowRight } from "lucide-react";
-import { PACKAGES } from "@/lib/data";
+import { CheckCircle2, ArrowRight, MessageCircle } from "lucide-react";
+import { PACKAGES, WHATSAPP, type Package } from "@/lib/data";
+
+function buildWhatsAppURL(pkg: Package): string {
+  const msg = `Hello Voltara Energies! 👋
+
+I'm interested in the *${pkg.title}* — ₦${pkg.price}
+
+💳 *Payment Options:*
+• Deposit (30%): ₦${pkg.deposit}
+• Monthly Plan: ₦${pkg.monthly}/month × 10 months
+
+⚡ *Powers:* ${pkg.appliances.slice(0, 4).join(", ")} & more
+
+Please contact me to proceed. Thank you!`;
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+}
 
 export default function PackagesPreview() {
   const ref = useRef<HTMLDivElement>(null);
@@ -18,13 +33,14 @@ export default function PackagesPreview() {
     return () => observer.disconnect();
   }, []);
 
-  const residential = PACKAGES.filter((p) => p.category === "residential");
+  // Show first 3 residential packages as preview
+  const preview = PACKAGES.filter((p) => p.category === "residential").slice(0, 3);
 
   return (
     <section className="py-12 sm:py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4">
 
-        <div className="mb-12">
+        <div className="mb-10">
           <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: "#F59E0B" }}>
             Residential Packages
           </p>
@@ -42,13 +58,13 @@ export default function PackagesPreview() {
               onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#d97706"; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#F59E0B"; }}
             >
-              See all packages <ArrowRight className="w-4 h-4" />
+              See all 11 packages <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
 
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {residential.map((pkg, i) => (
+          {preview.map((pkg, i) => (
             <div
               key={pkg.id}
               className="relative bg-white rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300"
@@ -61,89 +77,83 @@ export default function PackagesPreview() {
             >
               {pkg.popular && (
                 <div className="py-2 text-center text-xs font-bold uppercase tracking-widest text-white" style={{ backgroundColor: "#F59E0B" }}>
-                  Most Popular
+                  ⭐ Most Popular
                 </div>
               )}
 
-              <div className="p-7">
-                <div className="mb-5">
-                  <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#F59E0B" }}>
-                    {pkg.subtitle} · {pkg.capacity}
+              <div className="p-6">
+                <div className="mb-4">
+                  <span className="text-[11px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-amber-50 text-amber-600">
+                    {pkg.badge}
                   </span>
-                  <h3 className="text-xl font-bold text-slate-900 mt-1" style={{ fontFamily: "Poppins, sans-serif" }}>
+                  <h3 className="text-lg font-bold text-slate-900 mt-2" style={{ fontFamily: "Poppins, sans-serif" }}>
                     {pkg.title}
                   </h3>
                 </div>
 
-                <div className="mb-5 pb-5 border-b border-slate-100">
-                  <div className="flex items-baseline gap-0.5">
-                    <span className="text-sm text-slate-400">₦</span>
-                    <span className="text-4xl font-bold text-slate-900" style={{ fontFamily: "Poppins, sans-serif" }}>
-                      {pkg.price}
-                    </span>
+                <div className="mb-4 pb-4 border-b border-slate-100">
+                  <div className="text-[10px] text-slate-400 uppercase tracking-wide mb-0.5">Total Price</div>
+                  <div className="text-3xl font-bold text-slate-900" style={{ fontFamily: "Poppins, sans-serif" }}>
+                    ₦{pkg.price}
                   </div>
                   <p className="text-xs text-slate-400 mt-1">
-                    From ₦{Math.round(parseInt(pkg.price.replace(/,/g, "")) * 0.3 / 1000).toLocaleString()}k with financing
+                    From ₦{pkg.deposit} deposit (30% upfront)
                   </p>
                 </div>
 
-                <div className="mb-5 p-3 rounded-xl bg-slate-50 text-sm">
-                  <span className="text-slate-400 text-xs">Best for: </span>
-                  <span className="text-slate-700 font-medium">{pkg.bestFor}</span>
+                {/* Payment options */}
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  <div className="text-center p-2 rounded-xl border" style={{ backgroundColor: "#fffbeb", borderColor: "#fde68a" }}>
+                    <div className="text-[10px] font-bold uppercase mb-0.5" style={{ color: "#d97706" }}>Monthly</div>
+                    <div className="text-xs font-bold text-slate-900">₦{pkg.monthly}</div>
+                    <div className="text-[10px] text-slate-400">× 10 mo.</div>
+                  </div>
+                  <div className="text-center p-2 rounded-xl bg-slate-50 border border-slate-100">
+                    <div className="text-[10px] font-bold uppercase text-slate-400 mb-0.5">Weekly</div>
+                    <div className="text-xs font-bold text-slate-900">₦{pkg.weekly}</div>
+                    <div className="text-[10px] text-slate-400">× 40 wks</div>
+                  </div>
                 </div>
 
-                <ul className="space-y-2.5 mb-6">
-                  {pkg.features.slice(0, 5).map((feat) => (
-                    <li key={feat} className="flex items-start gap-2.5 text-sm text-slate-600">
-                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#F59E0B" }} />
-                      {feat}
+                <ul className="space-y-1.5 mb-5">
+                  {pkg.whatsInside.map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-xs text-slate-600">
+                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: "#F59E0B" }} />
+                      {item}
                     </li>
                   ))}
                 </ul>
 
-                <Link
-                  href="/packages"
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold transition-colors duration-200"
-                  style={
-                    pkg.popular
-                      ? { backgroundColor: "#F59E0B", color: "white" }
-                      : { backgroundColor: "white", color: "#0f172a", border: "1.5px solid #e2e8f0" }
-                  }
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.backgroundColor = pkg.popular ? "#d97706" : "#f8fafc";
-                    if (!pkg.popular) el.style.borderColor = "#F59E0B";
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.backgroundColor = pkg.popular ? "#F59E0B" : "white";
-                    if (!pkg.popular) el.style.borderColor = "#e2e8f0";
-                  }}
+                <a
+                  href={buildWhatsAppURL(pkg)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold text-white transition-opacity hover:opacity-90"
+                  style={pkg.popular ? { backgroundColor: "#F59E0B" } : { backgroundColor: "#0c1f3f" }}
                 >
-                  Get This Package <ArrowRight className="w-4 h-4" />
-                </Link>
+                  <MessageCircle className="w-4 h-4" />
+                  Order via WhatsApp
+                </a>
               </div>
             </div>
           ))}
         </div>
 
         {/* Commercial strip */}
-        <div
-          className="rounded-2xl p-7 flex flex-col sm:flex-row items-center justify-between gap-5 bg-navy"
-        >
+        <div className="rounded-2xl p-7 flex flex-col sm:flex-row items-center justify-between gap-5 bg-navy">
           <div>
             <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#F59E0B" }}>Business &amp; Industrial</p>
-            <h3 className="text-white font-bold text-xl" style={{ fontFamily: "Poppins, sans-serif" }}>Need a larger system?</h3>
-            <p className="text-sm mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>15kVA to 100kVA+ for offices, factories &amp; commercial facilities.</p>
+            <h3 className="text-white font-bold text-xl" style={{ fontFamily: "Poppins, sans-serif" }}>Need a larger or custom system?</h3>
+            <p className="text-sm mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>
+              11 residential packages + custom commercial solutions available.
+            </p>
           </div>
           <Link
             href="/packages"
-            className="shrink-0 flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-colors duration-200"
+            className="shrink-0 flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
             style={{ backgroundColor: "#F59E0B" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "#d97706"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "#F59E0B"; }}
           >
-            View Commercial Packages <ArrowRight className="w-4 h-4" />
+            View All Packages <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 

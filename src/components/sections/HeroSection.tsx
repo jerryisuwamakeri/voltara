@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, MessageCircle, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 const HERO_WORDS = ["Sustainably", "Efficiently", "Reliably", "Affordably"];
 
@@ -98,18 +98,13 @@ export default function HeroSection() {
             Explore Packages
             <ArrowRight className="w-5 h-5" />
           </Link>
-          <a
-            href="https://wa.me/2349131921437"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2.5 px-8 py-4 text-base font-semibold rounded-2xl text-white transition-all duration-200 w-full sm:w-auto justify-center"
+          <Link
+            href="/packages"
+            className="flex items-center gap-2.5 px-8 py-4 text-base font-semibold rounded-2xl text-white w-full sm:w-auto justify-center"
             style={{ backgroundColor: "rgba(255,255,255,0.1)", border: "2px solid rgba(255,255,255,0.3)" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.18)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.1)"; }}
           >
-            <MessageCircle className="w-5 h-5" />
-            Chat on WhatsApp
-          </a>
+            Explore Packages
+          </Link>
         </div>
 
         {/* Stats row */}

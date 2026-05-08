@@ -36,7 +36,7 @@ const QUICK_LINKS = [
   { label: "Home", path: "/" },
   { label: "Products", path: "/products" },
   { label: "Packages", path: "/packages" },
-  { label: "Finance", path: "/finance" },
+  { label: "Voltara Loan", path: "/finance" },
   { label: "Voltara AI", path: "/voltara-ai" },
   { label: "About", path: "/about" },
   { label: "Contact", path: "/contact" },
@@ -47,14 +47,15 @@ const SERVICES_LINKS = [
   { label: "Commercial Systems", path: "/packages" },
   { label: "Industrial Power", path: "/packages" },
   { label: "Solar Products", path: "/products" },
-  { label: "KVA Calculator", path: "/finance" },
+  { label: "Voltara Loan", path: "/finance" },
   { label: "Maintenance", path: "/contact" },
 ];
 
 const OFFICES = [
-  { city: "Lagos (HQ)", address: "123 Solar Street, Lekki" },
-  { city: "Abuja", address: "456 Energy Avenue, Wuse II" },
-  { city: "Ibadan", address: "789 Power Close, Bodija" },
+  { city: "Lagos", address: "New road Ibeju Lekki, Lagos" },
+  { city: "Oyo / Ibadan", address: "Suite 10 Nikem plaza opp. NNPC Apata, Ibadan" },
+  { city: "Abuja", address: "No 11 Prince Ebosele Crescent, Dutse, Abuja" },
+  { city: "Ondo / Akure", address: "Zion City Estate, Beside FUTA Northgate, Akure" },
 ];
 
 export default function Footer() {
@@ -166,14 +167,14 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://wa.me/2349131921437"
+                  href="https://wa.me/2349131797237"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-3 text-sm transition-colors"
                   style={{ color: "rgba(255,255,255,0.55)" }}
                 >
                   <Phone className="w-4 h-4 mt-0.5 shrink-0 text-amber-400" />
-                  +234 913 192 1437
+                  09131797237
                 </a>
               </li>
             </ul>

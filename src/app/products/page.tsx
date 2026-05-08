@@ -3,25 +3,25 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  Search, Filter, ArrowRight, ShieldCheck, Zap, BatteryCharging,
-  Cpu, Wrench, CheckCircle2, Phone, Star, Award
+  Search, ShieldCheck, CheckCircle2, Phone, MessageCircle, ArrowRight,
+  Zap, BatteryCharging, Star, Award, Sun, BatteryFull, Cpu, Cable
 } from "lucide-react";
-import { PRODUCTS } from "@/lib/data";
+import { PRODUCTS, WHATSAPP } from "@/lib/data";
 
 const CATEGORIES = [
-  { id: "all",         label: "All",         fullLabel: "All Products",  Icon: Filter },
-  { id: "panels",      label: "Panels",      fullLabel: "Solar Panels",  Icon: Zap },
-  { id: "batteries",   label: "Batteries",   fullLabel: "Batteries",     Icon: BatteryCharging },
-  { id: "inverters",   label: "Inverters",   fullLabel: "Inverters",     Icon: Cpu },
-  { id: "accessories", label: "Accessories", fullLabel: "Accessories",   Icon: Wrench },
+  { id: "all",         label: "All",         fullLabel: "All Products" },
+  { id: "panels",      label: "Panels",      fullLabel: "Solar Panels" },
+  { id: "batteries",   label: "Batteries",   fullLabel: "Batteries" },
+  { id: "inverters",   label: "Inverters",   fullLabel: "Inverters" },
+  { id: "accessories", label: "Accessories", fullLabel: "Accessories" },
 ];
 
-/* per-category visual identity */
-const CAT_THEME: Record<string, { icon: React.ElementType; bg: string; iconColor: string; lightBg: string }> = {
-  panels:      { icon: Zap,             bg: "#F59E0B", iconColor: "#fff",     lightBg: "#fff7ed" },
-  batteries:   { icon: BatteryCharging, bg: "#0ea5e9", iconColor: "#fff",     lightBg: "#e0f2fe" },
-  inverters:   { icon: Cpu,             bg: "#10b981", iconColor: "#fff",     lightBg: "#d1fae5" },
-  accessories: { icon: Wrench,          bg: "#8b5cf6", iconColor: "#fff",     lightBg: "#ede9fe" },
+type CatTheme = { bg: string; lightBg: string; accent: string; Icon: React.ElementType };
+const CAT_THEME: Record<string, CatTheme> = {
+  panels:      { bg: "#F59E0B", lightBg: "#fffbeb", accent: "#d97706", Icon: Sun },
+  batteries:   { bg: "#0ea5e9", lightBg: "#e0f2fe", accent: "#0284c7", Icon: BatteryFull },
+  inverters:   { bg: "#10b981", lightBg: "#ecfdf5", accent: "#059669", Icon: Cpu },
+  accessories: { bg: "#8b5cf6", lightBg: "#f5f3ff", accent: "#7c3aed", Icon: Cable },
 };
 
 export default function ProductsPage() {
@@ -100,20 +100,19 @@ export default function ProductsPage() {
 
           {/* Row 2 — category tabs, wrap on mobile, no scroll */}
           <div className="flex flex-wrap gap-2 pb-3">
-            {CATEGORIES.map(({ id, label, Icon }) => {
+            {CATEGORIES.map(({ id, label }) => {
               const active = activeCategory === id;
               return (
                 <button
                   key={id}
                   onClick={() => setActiveCategory(id)}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-150"
+                  className="px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-150"
                   style={
                     active
                       ? { backgroundColor: "#0c1f3f", color: "#F59E0B" }
                       : { backgroundColor: "#f1f5f9", color: "#64748b" }
                   }
                 >
-                  <Icon className="w-3.5 h-3.5" />
                   {label}
                 </button>
               );
@@ -142,31 +141,30 @@ export default function ProductsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {filtered.map((product) => {
               const theme = CAT_THEME[product.category] ?? CAT_THEME.panels;
-              const CatIcon = theme.icon;
+              const CatIcon = theme.Icon;
 
               return (
                 <div
                   key={product.id}
                   className="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
                 >
-                  {/* Card header — category colour */}
+                  {/* Card header */}
                   <div
                     className="h-36 flex items-center justify-center relative"
                     style={{ backgroundColor: theme.lightBg }}
                   >
-                    {/* Big icon */}
                     <div
                       className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm"
                       style={{ backgroundColor: theme.bg }}
                     >
-                      <CatIcon className="w-8 h-8" style={{ color: theme.iconColor }} />
+                      <CatIcon className="w-8 h-8 text-white" strokeWidth={1.5} />
                     </div>
 
                     {/* Badge */}
                     {product.badge && (
                       <div
                         className="absolute top-3 left-3 flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide text-white"
-                        style={{ backgroundColor: theme.bg }}
+                        style={{ backgroundColor: theme.accent }}
                       >
                         {product.badge === "Best Seller" && <Star className="w-3 h-3 fill-white" />}
                         {product.badge === "Premium" && <Award className="w-3 h-3" />}
@@ -232,13 +230,15 @@ export default function ProductsPage() {
                             ₦{product.price}
                           </div>
                         </div>
-                        <Link
-                          href="/contact"
+                        <a
+                          href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hello Voltara! 👋\n\nI'd like a quote for:\n*${product.name}* (${product.type})\nPrice: ₦${product.price}\n\nPlease contact me with availability and purchase details. Thank you!`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white transition-opacity hover:opacity-90"
                           style={{ backgroundColor: theme.bg, whiteSpace: "nowrap" }}
                         >
-                          Get Quote <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
+                          <MessageCircle className="w-3.5 h-3.5" /> Order
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -270,7 +270,7 @@ export default function ProductsPage() {
                   <ShieldCheck className="w-4 h-4" /> Get Expert Help
                 </Link>
                 <a
-                  href="https://wa.me/2349131921437"
+                  href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hi Voltara! I need help selecting the right solar products for my home.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-colors"

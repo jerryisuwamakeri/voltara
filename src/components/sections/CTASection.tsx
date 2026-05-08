@@ -36,7 +36,7 @@ export default function CTASection() {
                 Explore Packages <ArrowRight className="w-5 h-5" />
               </Link>
               <a
-                href="https://wa.me/2349131921437"
+                href="https://wa.me/2349131797237"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold text-white transition-colors duration-200 w-full sm:w-auto justify-center"
