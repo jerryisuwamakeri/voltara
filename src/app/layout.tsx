@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   description:
     "Transform your energy consumption with VOLTARA's cutting-edge solar solutions. Clean, reliable, and cost-effective power for homes and businesses across Nigeria.",
   keywords: "solar energy Nigeria, solar panels Lagos, inverter installation, clean energy, VOLTARA",
+  icons: {
+    icon: "/voltara-logo.png",
+    shortcut: "/voltara-logo.png",
+    apple: "/voltara-logo.png",
+  },
   openGraph: {
     title: "VOLTARA – Powering the Future Sustainably",
     description:
