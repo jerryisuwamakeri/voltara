@@ -2,78 +2,56 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, ArrowRight, Phone, MessageCircle, Zap, Package as PackageIcon, Home, Building2, Star } from "lucide-react";
+import { Check, ArrowRight, Phone, MessageCircle, Zap, Package as PackageIcon, Home, Building2, Star } from "lucide-react";
 import { PACKAGES, WHATSAPP, type Package } from "@/lib/data";
+import PageHero from "@/components/ui/PageHero";
 
 function buildWhatsAppURL(pkg: Package): string {
-  const msg = `Hello Voltara Energies! 👋
+  const msg = `Hello Voltara Energies!
 
 I'm interested in the *${pkg.title}* — ₦${pkg.price}
 
-💳 *Payment Options:*
+Payment options:
 • Deposit (30%): ₦${pkg.deposit}
-• Monthly Plan: ₦${pkg.monthly}/month × 10 months
-• Weekly Plan: ₦${pkg.weekly}/week × 40 weeks
+• Monthly: ₦${pkg.monthly}/month × 10 months
+• Weekly: ₦${pkg.weekly}/week × 40 weeks
 
-⚡ *Powers:* ${pkg.appliances.slice(0, 5).join(", ")}${pkg.appliances.length > 5 ? " & more" : ""}
+Powers: ${pkg.appliances.slice(0, 5).join(", ")}${pkg.appliances.length > 5 ? " & more" : ""}
 
 Please contact me to proceed. Thank you!`;
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
-
-const TIER_COLORS: Record<string, { bg: string; text: string }> = {
-  "Starter Pack":   { bg: "#f1f5f9", text: "#64748b" },
-  "Home Starter":   { bg: "#dbeafe", text: "#1d4ed8" },
-  "Family Pack":    { bg: "#fef3c7", text: "#d97706" },
-  "Power Pack":     { bg: "#ffedd5", text: "#ea580c" },
-  "Silver Package": { bg: "#f1f5f9", text: "#475569" },
-  "Gold Package":   { bg: "#fef3c7", text: "#d97706" },
-  "6kVA Silver":    { bg: "#f1f5f9", text: "#475569" },
-  "6kVA Gold":      { bg: "#fef3c7", text: "#d97706" },
-  "8kVA Silver":    { bg: "#f1f5f9", text: "#475569" },
-  "8kVA Gold":      { bg: "#fef3c7", text: "#d97706" },
-  "Ultimate Gold":  { bg: "#fef3c7", text: "#d97706" },
-  "Commercial":     { bg: "#e0f2fe", text: "#0284c7" },
-};
 
 export default function PackagesPage() {
   const [category, setCategory] = useState<"residential" | "commercial">("residential");
   const shown = PACKAGES.filter((p) => p.category === category);
 
   return (
-    <div className="min-h-screen bg-slate-50">
-
-      {/* Hero */}
-      <div className="bg-navy pt-24 pb-12 sm:pt-28 sm:pb-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "#F59E0B" }}>Solar Packages</p>
-          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>
-            Choose Your <span className="text-gradient">Solar Package</span>
-          </h1>
-          <p className="text-base sm:text-lg max-w-2xl mb-2" style={{ color: "rgba(255,255,255,0.65)" }}>
-            All packages include professional installation, 5-year warranty, and flexible payment. Start with just 30% down.
-          </p>
-          <p className="text-xs" style={{ color: "rgba(245,158,11,0.7)" }}>
-            * 4% monthly interest applies to financed balance. Prices subject to change.
-          </p>
-        </div>
-      </div>
+    <div className="bg-cream">
+      <PageHero
+        kicker="Solar packages"
+        title={<>Choose your <span className="text-gold">solar package</span></>}
+        intro="Every package includes professional installation, a 5-year warranty, and flexible payment — start with just 30% down."
+      >
+        <p className="mt-4 text-xs text-gold/80">
+          * 4% monthly interest applies to financed balance. Prices subject to change.
+        </p>
+      </PageHero>
 
       {/* Toggle */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex items-center gap-1 bg-slate-200 p-1 rounded-xl w-fit">
+      <div className="shell container-px pt-10">
+        <div className="flex w-fit items-center gap-1 rounded-full bg-[#e7ecf2] p-1">
           {(["residential", "commercial"] as const).map((cat) => {
             const Icon = cat === "residential" ? Home : Building2;
             return (
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200"
-                style={category === cat
-                  ? { backgroundColor: "#0c1f3f", color: "#F59E0B" }
-                  : { color: "#64748b" }}
+                className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
+                  category === cat ? "bg-navy text-gold" : "text-[#5b6675]"
+                }`}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="h-4 w-4" />
                 {cat === "residential" ? "Residential" : "Commercial"}
               </button>
             );
@@ -81,103 +59,80 @@ export default function PackagesPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 pb-16">
-
+      <div className="shell container-px pb-16 pt-8">
         {category === "residential" ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-10">
+          <div className="mb-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             {shown.map((pkg) => {
-              const color = TIER_COLORS[pkg.badge] ?? { bg: "#fef3c7", text: "#d97706" };
               const waURL = buildWhatsAppURL(pkg);
-
               return (
                 <div
                   key={pkg.id}
-                  className="bg-white rounded-2xl overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-200"
-                  style={{ border: pkg.popular ? "2px solid #F59E0B" : "1px solid #e2e8f0" }}
+                  className={`card flex flex-col overflow-hidden ${pkg.popular ? "ring-2 ring-gold" : "card-hover"}`}
                 >
                   {pkg.popular && (
-                    <div className="py-2 flex items-center justify-center gap-1.5 text-xs font-bold uppercase tracking-widest text-white" style={{ backgroundColor: "#F59E0B" }}>
-                      <Star className="w-3.5 h-3.5 fill-white" /> Most Popular
+                    <div className="flex items-center justify-center gap-1.5 bg-gold py-2 text-xs font-bold uppercase tracking-widest text-[#1a1205]">
+                      <Star className="h-3.5 w-3.5 fill-current" /> Most popular
                     </div>
                   )}
 
-                  <div className="p-6 flex flex-col flex-1">
-                    {/* Badge + title */}
+                  <div className="flex flex-1 flex-col p-6">
                     <div className="mb-4">
-                      <span className="inline-block text-[11px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full" style={{ backgroundColor: color.bg, color: color.text }}>
-                        {pkg.badge}
-                      </span>
-                      <h2 className="text-lg font-bold text-slate-900 mt-2" style={{ fontFamily: "Poppins, sans-serif" }}>
-                        {pkg.title}
-                      </h2>
+                      <span className="pill">{pkg.badge}</span>
+                      <h2 className="display mt-3 text-lg">{pkg.title}</h2>
                     </div>
 
-                    {/* Price */}
-                    <div className="mb-4 pb-4 border-b border-slate-100">
-                      <div className="text-[10px] text-slate-400 uppercase tracking-wide font-medium mb-0.5">Total System Price</div>
-                      <div className="text-3xl font-bold text-slate-900" style={{ fontFamily: "Poppins, sans-serif" }}>
-                        ₦{pkg.price}
-                      </div>
+                    <div className="mb-4 border-b border-[#eef1f5] pb-4">
+                      <div className="text-[0.65rem] font-medium uppercase tracking-wide text-[#94a3b8]">Total system price</div>
+                      <div className="display text-3xl text-ink">₦{pkg.price}</div>
                     </div>
 
-                    {/* Payment plans */}
-                    <div className="grid grid-cols-3 gap-2 mb-4">
-                      <div className="text-center p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                        <div className="text-[10px] font-bold uppercase text-slate-400 mb-1">Deposit</div>
-                        <div className="text-xs font-bold text-slate-900 leading-tight">₦{pkg.deposit}</div>
-                        <div className="text-[10px] text-slate-400">30% upfront</div>
+                    <div className="mb-4 grid grid-cols-3 gap-2">
+                      <div className="rounded-xl border border-[#eef1f5] bg-[#f7f8fa] p-2.5 text-center">
+                        <div className="mb-1 text-[0.6rem] font-bold uppercase text-[#94a3b8]">Deposit</div>
+                        <div className="text-xs font-bold leading-tight text-ink">₦{pkg.deposit}</div>
+                        <div className="text-[0.6rem] text-[#94a3b8]">30% upfront</div>
                       </div>
-                      <div className="text-center p-2.5 rounded-xl border" style={{ backgroundColor: "#fffbeb", borderColor: "#fde68a" }}>
-                        <div className="text-[10px] font-bold uppercase mb-1" style={{ color: "#d97706" }}>Monthly</div>
-                        <div className="text-xs font-bold text-slate-900 leading-tight">₦{pkg.monthly}</div>
-                        <div className="text-[10px] text-slate-400">× 10 months</div>
+                      <div className="rounded-xl border border-[#fde6c3] bg-gold-soft p-2.5 text-center">
+                        <div className="mb-1 text-[0.6rem] font-bold uppercase text-gold-dark">Monthly</div>
+                        <div className="text-xs font-bold leading-tight text-ink">₦{pkg.monthly}</div>
+                        <div className="text-[0.6rem] text-[#94a3b8]">× 10 months</div>
                       </div>
-                      <div className="text-center p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                        <div className="text-[10px] font-bold uppercase text-slate-400 mb-1">Weekly</div>
-                        <div className="text-xs font-bold text-slate-900 leading-tight">₦{pkg.weekly}</div>
-                        <div className="text-[10px] text-slate-400">× 40 weeks</div>
+                      <div className="rounded-xl border border-[#eef1f5] bg-[#f7f8fa] p-2.5 text-center">
+                        <div className="mb-1 text-[0.6rem] font-bold uppercase text-[#94a3b8]">Weekly</div>
+                        <div className="text-xs font-bold leading-tight text-ink">₦{pkg.weekly}</div>
+                        <div className="text-[0.6rem] text-[#94a3b8]">× 40 weeks</div>
                       </div>
                     </div>
 
-                    {/* Appliances */}
                     <div className="mb-4">
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <Zap className="w-3.5 h-3.5" style={{ color: "#F59E0B" }} />
-                        <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Powers</span>
+                      <div className="mb-2 flex items-center gap-1.5">
+                        <Zap className="h-3.5 w-3.5 text-gold-dark" />
+                        <span className="text-[0.7rem] font-bold uppercase tracking-widest text-[#94a3b8]">Powers</span>
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {pkg.appliances.map((a) => (
-                          <span key={a} className="text-xs px-2 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200">{a}</span>
+                          <span key={a} className="rounded-lg border border-[#eef1f5] bg-[#f7f8fa] px-2 py-1 text-xs text-[#5b6675]">{a}</span>
                         ))}
                       </div>
                     </div>
 
-                    {/* What's inside */}
                     <div className="mb-5 flex-1">
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <PackageIcon className="w-3.5 h-3.5" style={{ color: "#F59E0B" }} />
-                        <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">What&apos;s Inside</span>
+                      <div className="mb-2 flex items-center gap-1.5">
+                        <PackageIcon className="h-3.5 w-3.5 text-gold-dark" />
+                        <span className="text-[0.7rem] font-bold uppercase tracking-widest text-[#94a3b8]">What&apos;s inside</span>
                       </div>
                       <ul className="space-y-1.5">
                         {pkg.whatsInside.map((item) => (
-                          <li key={item} className="flex items-center gap-2 text-xs text-slate-600">
-                            <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: "#F59E0B" }} />
+                          <li key={item} className="flex items-center gap-2 text-xs text-[#5b6675]">
+                            <Check className="h-3.5 w-3.5 shrink-0 text-gold-dark" />
                             {item}
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    {/* Order via WhatsApp */}
-                    <a
-                      href={waURL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold text-white transition-opacity hover:opacity-90"
-                      style={{ backgroundColor: "#F59E0B" }}
-                    >
-                      <MessageCircle className="w-4 h-4" />
-                      Order via WhatsApp
+                    <a href={waURL} target="_blank" rel="noopener noreferrer" className={`btn w-full ${pkg.popular ? "btn-primary" : "btn-dark"}`}>
+                      <MessageCircle className="h-4 w-4" /> Order via WhatsApp
                     </a>
                   </div>
                 </div>
@@ -185,31 +140,32 @@ export default function PackagesPage() {
             })}
           </div>
         ) : (
-          <div className="max-w-2xl">
-            <div className="bg-white rounded-2xl border border-slate-200 p-8">
-              <p className="text-sm font-bold uppercase tracking-widest mb-1" style={{ color: "#F59E0B" }}>Commercial &amp; Industrial</p>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "Poppins, sans-serif" }}>Custom Sizing Available</h2>
-              <p className="text-slate-600 mb-6">We design and install solar systems for offices, shops, factories, and farms — any size, any budget.</p>
-              <ul className="space-y-3 mb-7">
+          <div className="mb-10 max-w-2xl">
+            <div className="card p-8">
+              <span className="eyebrow">Commercial &amp; industrial</span>
+              <h2 className="display display-md mt-3">Custom sizing available</h2>
+              <p className="mt-2 text-[#5b6675]">
+                We design and install solar systems for offices, shops, factories, and farms — any size, any budget.
+              </p>
+              <ul className="my-7 space-y-3">
                 {["Custom inverter sizing", "Scalable battery bank", "Professional installation", "Grid-tie / off-grid options"].map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-slate-700 text-sm">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: "#F59E0B" }} />
+                  <li key={item} className="flex items-center gap-3 text-sm text-[#3f4a59]">
+                    <Check className="h-4 w-4 shrink-0 text-gold-dark" />
                     {item}
                   </li>
                 ))}
               </ul>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <a
                   href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hello Voltara! I need a quote for a commercial/industrial solar system. Please contact me.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold text-white transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: "#F59E0B" }}
+                  className="btn btn-primary"
                 >
-                  <MessageCircle className="w-4 h-4" /> Request Custom Quote
+                  <MessageCircle className="h-4 w-4" /> Request custom quote
                 </a>
-                <Link href="/contact" className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold border-2 border-slate-200 text-slate-900 hover:border-amber-400 transition-colors">
-                  <Phone className="w-4 h-4" /> Contact Us
+                <Link href="/contact" className="btn btn-outline">
+                  <Phone className="h-4 w-4" /> Contact us
                 </Link>
               </div>
             </div>
@@ -217,32 +173,24 @@ export default function PackagesPage() {
         )}
 
         {/* Help strip */}
-        <div className="bg-navy rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 mt-2">
+        <div className="dot-grid mt-2 flex flex-col items-start justify-between gap-5 rounded-[1.5rem] bg-navy p-8 sm:flex-row sm:items-center">
           <div>
-            <h3 className="text-white font-bold text-lg mb-1" style={{ fontFamily: "Poppins, sans-serif" }}>
-              Not sure which package fits your home?
-            </h3>
-            <p className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-              Call{" "}
-              <a href="tel:09131797237" className="text-amber-400 font-semibold">09131797237</a>
-              {" "}or use our KVA calculator to find your perfect size.
+            <h3 className="display text-xl text-white">Not sure which package fits your home?</h3>
+            <p className="mt-1 text-sm text-white/60">
+              Call <a href="tel:09131797237" className="font-semibold text-gold">09131797237</a> or use our KVA calculator to find your perfect size.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3 shrink-0">
-            <Link
-              href="/voltara-ai#kva"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              style={{ backgroundColor: "#F59E0B" }}
-            >
-              KVA Calculator <ArrowRight className="w-4 h-4" />
+          <div className="flex shrink-0 flex-wrap gap-3">
+            <Link href="/voltara-ai#kva" className="btn btn-primary">
+              KVA calculator <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hi Voltara! I need help choosing the right solar package for my home.")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white border border-white/30 hover:bg-white/10 transition-colors"
+              className="btn btn-light"
             >
-              <MessageCircle className="w-4 h-4" /> Ask on WhatsApp
+              <MessageCircle className="h-4 w-4" /> Ask on WhatsApp
             </a>
           </div>
         </div>

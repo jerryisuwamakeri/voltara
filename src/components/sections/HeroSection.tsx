@@ -1,144 +1,84 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ChevronDown } from "lucide-react";
-
-const HERO_WORDS = ["Sustainably", "Efficiently", "Reliably", "Affordably"];
+import { ArrowRight, Phone, ShieldCheck, Star } from "lucide-react";
 
 export default function HeroSection() {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [wordVisible, setWordVisible] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWordVisible(false);
-      setTimeout(() => {
-        setWordIndex((i) => (i + 1) % HERO_WORDS.length);
-        setWordVisible(true);
-      }, 350);
-    }, 2800);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-
+    <section className="relative isolate flex min-h-[92vh] flex-col justify-center overflow-hidden">
       {/* Background photo */}
       <Image
         src="/hero-solar.jpg"
-        alt="Solar panels in Nigeria"
+        alt="Solar installation in Nigeria"
         fill
-        className="object-cover object-center"
         priority
         quality={85}
+        className="object-cover object-center -z-10"
       />
-
-      {/* Dark overlay — solid, no blur */}
+      {/* Tonal gradient — heavier on the left for text legibility */}
       <div
-        className="absolute inset-0"
-        style={{ backgroundColor: "rgba(8, 20, 45, 0.80)" }}
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "linear-gradient(100deg, rgba(8,18,40,0.94) 0%, rgba(8,18,40,0.82) 42%, rgba(8,18,40,0.45) 100%)",
+        }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 text-center pt-24 pb-16">
+      <div className="shell container-px pt-28 pb-28">
+        <div className="max-w-2xl">
+          {/* Headline */}
+          <h1 className="display display-xl text-white">
+            Powering the future,{" "}
+            <span className="text-gold">sustainably.</span>
+          </h1>
 
-        {/* Badge */}
-        <div
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-sm font-semibold"
-          style={{ backgroundColor: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.4)", color: "#FCD34D" }}
-        >
-          <span
-            className="w-2 h-2 rounded-full"
-            style={{ backgroundColor: "#F59E0B" }}
-          />
-          Nigeria&apos;s Premier Solar Solutions Provider
-        </div>
+          <p className="mt-6 max-w-xl text-[1.05rem] leading-relaxed text-white/75">
+            VOLTARA fuses solar engineering with electrical expertise to deliver
+            clean, reliable, cost-effective power for homes and businesses across
+            Nigeria — backed by certified installation and flexible payment plans.
+          </p>
 
-        {/* Headline */}
-        <h1
-          className="font-bold text-white leading-tight mb-6"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: "clamp(2.4rem, 6.5vw, 4.5rem)" }}
-        >
-          Powering the Future
-          <br />
-          <span
-            className="text-gradient"
-            style={{
-              display: "inline-block",
-              opacity: wordVisible ? 1 : 0,
-              transform: wordVisible ? "translateY(0)" : "translateY(14px)",
-              transition: "opacity 0.35s ease, transform 0.35s ease",
-            }}
-          >
-            {HERO_WORDS[wordIndex]}
-          </span>
-        </h1>
+          {/* CTAs */}
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link href="/packages" className="btn btn-primary">
+              Explore Packages <ArrowRight className="h-5 w-5" />
+            </Link>
+            <a
+              href="https://wa.me/2349131797237"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-light"
+            >
+              <Phone className="h-5 w-5" /> Talk to an expert
+            </a>
+          </div>
 
-        {/* Sub */}
-        <p
-          className="text-white max-w-2xl mx-auto leading-relaxed mb-10"
-          style={{ fontSize: "clamp(1rem, 2vw, 1.15rem)", opacity: 0.75 }}
-        >
-          Transform your energy consumption with VOLTARA&apos;s cutting-edge solar
-          solutions. Clean, reliable, and cost-effective power for your home or
-          business across Nigeria.
-        </p>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-          <Link
-            href="/packages"
-            className="flex items-center gap-2.5 px-8 py-4 text-base font-semibold rounded-2xl text-white transition-all duration-200 w-full sm:w-auto justify-center"
-            style={{ backgroundColor: "#F59E0B" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "#d97706"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "#F59E0B"; }}
-          >
-            Explore Packages
-            <ArrowRight className="w-5 h-5" />
-          </Link>
-          <Link
-            href="/packages"
-            className="flex items-center gap-2.5 px-8 py-4 text-base font-semibold rounded-2xl text-white w-full sm:w-auto justify-center"
-            style={{ backgroundColor: "rgba(255,255,255,0.1)", border: "2px solid rgba(255,255,255,0.3)" }}
-          >
-            Explore Packages
-          </Link>
-        </div>
-
-        {/* Stats row */}
-        <div className="flex flex-wrap items-center justify-center gap-10 sm:gap-16">
-          {[
-            { label: "Happy Customers", value: "50+"    },
-            { label: "kVA Installed",   value: "250"   },
-            { label: "System Uptime",   value: "99.9%" },
-            { label: "Office Locations",value: "6"     },
-          ].map((item) => (
-            <div key={item.label} className="text-center">
-              <div
-                className="text-2xl sm:text-3xl font-bold"
-                style={{ fontFamily: "Poppins, sans-serif", color: "#F59E0B" }}
-              >
-                {item.value}
-              </div>
-              <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>
-                {item.label}
-              </div>
-            </div>
-          ))}
+          {/* Trust line */}
+          <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-white/70">
+            <span className="inline-flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-gold" /> 5-year system warranty
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Star className="h-4 w-4 fill-gold text-gold" /> Rated 5.0 by customers
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Since 2018
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Scroll cue */}
-      <a
-        href="#stats"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 transition-colors"
-        style={{ color: "rgba(255,255,255,0.4)" }}
+      {/* Wave divider into the white section below */}
+      <svg
+        className="wave absolute bottom-0 left-0"
+        viewBox="0 0 1440 90"
+        preserveAspectRatio="none"
+        aria-hidden
       >
-        <span className="text-xs">Scroll</span>
-        <ChevronDown className="w-5 h-5 animate-bounce" />
-      </a>
+        <path
+          fill="#ffffff"
+          d="M0,48 C240,90 480,90 720,60 C960,30 1200,30 1440,56 L1440,90 L0,90 Z"
+        />
+      </svg>
     </section>
   );
 }

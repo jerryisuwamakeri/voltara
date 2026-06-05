@@ -3,25 +3,25 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  Search, ShieldCheck, CheckCircle2, Phone, MessageCircle, ArrowRight,
-  Zap, BatteryCharging, Star, Award, Sun, BatteryFull, Cpu, Cable
+  Search, ShieldCheck, Check, Phone, MessageCircle,
+  Zap, BatteryCharging, Star, Award, Sun, BatteryFull, Cpu, Cable,
 } from "lucide-react";
 import { PRODUCTS, WHATSAPP } from "@/lib/data";
+import PageHero from "@/components/ui/PageHero";
 
 const CATEGORIES = [
-  { id: "all",         label: "All",         fullLabel: "All Products" },
-  { id: "panels",      label: "Panels",      fullLabel: "Solar Panels" },
-  { id: "batteries",   label: "Batteries",   fullLabel: "Batteries" },
-  { id: "inverters",   label: "Inverters",   fullLabel: "Inverters" },
+  { id: "all", label: "All", fullLabel: "All Products" },
+  { id: "panels", label: "Panels", fullLabel: "Solar Panels" },
+  { id: "batteries", label: "Batteries", fullLabel: "Batteries" },
+  { id: "inverters", label: "Inverters", fullLabel: "Inverters" },
   { id: "accessories", label: "Accessories", fullLabel: "Accessories" },
 ];
 
-type CatTheme = { bg: string; lightBg: string; accent: string; Icon: React.ElementType };
-const CAT_THEME: Record<string, CatTheme> = {
-  panels:      { bg: "#F59E0B", lightBg: "#fffbeb", accent: "#d97706", Icon: Sun },
-  batteries:   { bg: "#0ea5e9", lightBg: "#e0f2fe", accent: "#0284c7", Icon: BatteryFull },
-  inverters:   { bg: "#10b981", lightBg: "#ecfdf5", accent: "#059669", Icon: Cpu },
-  accessories: { bg: "#8b5cf6", lightBg: "#f5f3ff", accent: "#7c3aed", Icon: Cable },
+const CAT_ICON: Record<string, React.ElementType> = {
+  panels: Sun,
+  batteries: BatteryFull,
+  inverters: Cpu,
+  accessories: Cable,
 };
 
 export default function ProductsPage() {
@@ -29,76 +29,57 @@ export default function ProductsPage() {
   const [search, setSearch] = useState("");
 
   const filtered = PRODUCTS.filter((p) => {
-    const matchCat    = activeCategory === "all" || p.category === activeCategory;
+    const matchCat = activeCategory === "all" || p.category === activeCategory;
     const matchSearch =
       p.name.toLowerCase().includes(search.toLowerCase()) ||
       p.type.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
   });
 
-  const resultLabel = activeCategory === "all"
-    ? `${filtered.length} products`
-    : `${filtered.length} ${CATEGORIES.find(c => c.id === activeCategory)?.fullLabel.toLowerCase()}`;
+  const resultLabel =
+    activeCategory === "all"
+      ? `${filtered.length} products`
+      : `${filtered.length} ${CATEGORIES.find((c) => c.id === activeCategory)?.fullLabel.toLowerCase()}`;
 
   return (
-    <div className="min-h-screen bg-slate-50">
-
-      {/* ── Hero ── */}
-      <div className="bg-navy pt-24 pb-12 sm:pt-28 sm:pb-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "#F59E0B" }}>
-            Product Catalog
-          </p>
-          <h1
-            className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4"
-            style={{ fontFamily: "Poppins, sans-serif" }}
-          >
-            Solar Products &amp;{" "}
-            <span className="text-gradient">Components</span>
-          </h1>
-          <p className="text-base sm:text-lg max-w-xl mb-8" style={{ color: "rgba(255,255,255,0.65)" }}>
-            High-performance panels, batteries, inverters, and accessories —
-            all sourced from trusted manufacturers with full warranties.
-          </p>
-
-          {/* Quick stats */}
-          <div className="flex flex-wrap gap-6">
-            {[
-              { value: "8", label: "Products" },
-              { value: "25yr", label: "Panel Warranty" },
-              { value: "4", label: "Categories" },
-              { value: "100%", label: "Certified" },
-            ].map((s) => (
-              <div key={s.label}>
-                <div className="text-xl font-bold" style={{ color: "#F59E0B", fontFamily: "Poppins, sans-serif" }}>{s.value}</div>
-                <div className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
+    <div className="bg-cream">
+      <PageHero
+        kicker="Product catalog"
+        title={<>Solar products &amp; <span className="text-gold">components</span></>}
+        intro="High-performance panels, batteries, inverters, and accessories — sourced from trusted manufacturers with full warranties."
+      >
+        <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+          {[
+            { value: "8", label: "Products" },
+            { value: "25yr", label: "Panel warranty" },
+            { value: "4", label: "Categories" },
+            { value: "100%", label: "Certified" },
+          ].map((s) => (
+            <div key={s.label}>
+              <div className="display text-xl text-gold">{s.value}</div>
+              <div className="text-xs text-white/50">{s.label}</div>
+            </div>
+          ))}
         </div>
-      </div>
+      </PageHero>
 
-      {/* ── Filter + Search bar ── */}
-      <div className="sticky top-16 z-30 bg-white border-b border-slate-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4">
-
-          {/* Row 1 — search + count */}
-          <div className="flex items-center gap-3 pt-3 pb-2">
-            <div className="relative flex-1 sm:flex-none sm:w-60">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+      {/* Filter + Search bar */}
+      <div className="sticky top-[72px] z-30 border-b border-[#eef1f5] bg-white/95 backdrop-blur-md">
+        <div className="shell container-px">
+          <div className="flex items-center gap-3 pb-2 pt-3">
+            <div className="relative flex-1 sm:w-60 sm:flex-none">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94a3b8]" />
               <input
                 type="text"
                 placeholder="Search products…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="input-field text-sm py-2 w-full"
-                style={{ paddingLeft: "2.25rem" }}
+                className="field py-2 pl-9 text-sm"
               />
             </div>
-            <span className="ml-auto text-xs text-slate-400 shrink-0">{resultLabel}</span>
+            <span className="ml-auto shrink-0 text-xs text-[#94a3b8]">{resultLabel}</span>
           </div>
 
-          {/* Row 2 — category tabs, wrap on mobile, no scroll */}
           <div className="flex flex-wrap gap-2 pb-3">
             {CATEGORIES.map(({ id, label }) => {
               const active = activeCategory === id;
@@ -106,140 +87,92 @@ export default function ProductsPage() {
                 <button
                   key={id}
                   onClick={() => setActiveCategory(id)}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-150"
-                  style={
-                    active
-                      ? { backgroundColor: "#0c1f3f", color: "#F59E0B" }
-                      : { backgroundColor: "#f1f5f9", color: "#64748b" }
-                  }
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${
+                    active ? "bg-navy text-gold" : "bg-[#f1f4f8] text-[#5b6675] hover:bg-[#e7ecf2]"
+                  }`}
                 >
                   {label}
                 </button>
               );
             })}
           </div>
-
         </div>
       </div>
 
-      {/* ── Grid ── */}
-      <div className="max-w-7xl mx-auto px-4 py-8 sm:py-10">
+      {/* Grid */}
+      <div className="shell container-px py-10">
         {filtered.length === 0 ? (
-          <div className="text-center py-24">
-            <Search className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-            <p className="text-slate-900 font-semibold text-lg">No products found</p>
-            <p className="text-slate-500 text-sm mt-1">Try a different search or category</p>
-            <button
-              onClick={() => { setSearch(""); setActiveCategory("all"); }}
-              className="mt-4 px-5 py-2 rounded-xl text-sm font-semibold text-white"
-              style={{ backgroundColor: "#F59E0B" }}
-            >
+          <div className="py-24 text-center">
+            <Search className="mx-auto mb-3 h-10 w-10 text-[#cbd5e1]" />
+            <p className="display text-lg">No products found</p>
+            <p className="mt-1 text-sm text-[#94a3b8]">Try a different search or category</p>
+            <button onClick={() => { setSearch(""); setActiveCategory("all"); }} className="btn btn-primary mt-5">
               Clear filters
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filtered.map((product) => {
-              const theme = CAT_THEME[product.category] ?? CAT_THEME.panels;
-              const CatIcon = theme.Icon;
-
+              const CatIcon = CAT_ICON[product.category] ?? Sun;
               return (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  {/* Card header */}
-                  <div
-                    className="h-36 flex items-center justify-center relative"
-                    style={{ backgroundColor: theme.lightBg }}
-                  >
-                    <div
-                      className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm"
-                      style={{ backgroundColor: theme.bg }}
-                    >
-                      <CatIcon className="w-8 h-8 text-white" strokeWidth={1.5} />
-                    </div>
-
-                    {/* Badge */}
+                <div key={product.id} className="card card-hover flex flex-col overflow-hidden">
+                  <div className="relative flex h-36 items-center justify-center bg-gold-soft">
+                    <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gold text-[#1a1205] shadow-sm">
+                      <CatIcon className="h-8 w-8" strokeWidth={1.5} />
+                    </span>
                     {product.badge && (
-                      <div
-                        className="absolute top-3 left-3 flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide text-white"
-                        style={{ backgroundColor: theme.accent }}
-                      >
-                        {product.badge === "Best Seller" && <Star className="w-3 h-3 fill-white" />}
-                        {product.badge === "Premium" && <Award className="w-3 h-3" />}
+                      <div className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-navy px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wide text-gold">
+                        {product.badge === "Best Seller" && <Star className="h-3 w-3 fill-current" />}
+                        {product.badge === "Premium" && <Award className="h-3 w-3" />}
                         {product.badge}
                       </div>
                     )}
                   </div>
 
-                  {/* Card body */}
-                  <div className="p-5 flex flex-col flex-1">
-                    {/* Type + name */}
+                  <div className="flex flex-1 flex-col p-5">
                     <div className="mb-3">
-                      <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: theme.bg }}>
-                        {product.type}
-                      </span>
-                      <h3 className="font-bold text-slate-900 text-base mt-0.5 leading-snug">
-                        {product.name}
-                      </h3>
+                      <span className="text-[0.7rem] font-bold uppercase tracking-wider text-gold-dark">{product.type}</span>
+                      <h3 className="display mt-0.5 text-base leading-snug">{product.name}</h3>
                     </div>
 
-                    {/* Spec chips */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
+                    <div className="mb-4 flex flex-wrap gap-1.5">
                       {"efficiency" in product && product.efficiency && (
-                        <span
-                          className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg"
-                          style={{ backgroundColor: theme.lightBg, color: theme.bg }}
-                        >
-                          <Zap className="w-3 h-3" /> {product.efficiency}
+                        <span className="inline-flex items-center gap-1 rounded-lg bg-gold-soft px-2 py-1 text-xs font-semibold text-gold-dark">
+                          <Zap className="h-3 w-3" /> {product.efficiency}
                         </span>
                       )}
                       {"power" in product && product.power && (
-                        <span
-                          className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg"
-                          style={{ backgroundColor: theme.lightBg, color: theme.bg }}
-                        >
-                          <BatteryCharging className="w-3 h-3" /> {product.power}
+                        <span className="inline-flex items-center gap-1 rounded-lg bg-gold-soft px-2 py-1 text-xs font-semibold text-gold-dark">
+                          <BatteryCharging className="h-3 w-3" /> {product.power}
                         </span>
                       )}
-                      <span
-                        className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg"
-                        style={{ backgroundColor: "#f0fdf4", color: "#16a34a" }}
-                      >
-                        <ShieldCheck className="w-3 h-3" /> {product.warranty}
+                      <span className="inline-flex items-center gap-1 rounded-lg bg-[#f0fdf4] px-2 py-1 text-xs font-semibold text-[#16a34a]">
+                        <ShieldCheck className="h-3 w-3" /> {product.warranty}
                       </span>
                     </div>
 
-                    {/* Features */}
-                    <ul className="space-y-1.5 mb-5 flex-1">
+                    <ul className="mb-5 flex-1 space-y-1.5">
                       {product.features.map((f) => (
-                        <li key={f} className="flex items-center gap-2 text-xs text-slate-600">
-                          <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: theme.bg }} />
+                        <li key={f} className="flex items-center gap-2 text-xs text-[#5b6675]">
+                          <Check className="h-3.5 w-3.5 shrink-0 text-gold-dark" />
                           {f}
                         </li>
                       ))}
                     </ul>
 
-                    {/* Price + CTA */}
-                    <div className="pt-4 border-t border-slate-100">
-                      <div className="flex items-center justify-between gap-2">
-                        <div>
-                          <div className="text-[10px] text-slate-400 uppercase tracking-wide font-medium">From</div>
-                          <div className="text-lg font-bold text-slate-900" style={{ fontFamily: "Poppins, sans-serif" }}>
-                            ₦{product.price}
-                          </div>
-                        </div>
-                        <a
-                          href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hello Voltara! 👋\n\nI'd like a quote for:\n*${product.name}* (${product.type})\nPrice: ₦${product.price}\n\nPlease contact me with availability and purchase details. Thank you!`)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white transition-opacity hover:opacity-90"
-                          style={{ backgroundColor: theme.bg, whiteSpace: "nowrap" }}
-                        >
-                          <MessageCircle className="w-3.5 h-3.5" /> Order
-                        </a>
+                    <div className="flex items-center justify-between gap-2 border-t border-[#eef1f5] pt-4">
+                      <div>
+                        <div className="text-[0.65rem] font-medium uppercase tracking-wide text-[#94a3b8]">From</div>
+                        <div className="display text-lg text-ink">₦{product.price}</div>
                       </div>
+                      <a
+                        href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hello Voltara!\n\nI'd like a quote for:\n*${product.name}* (${product.type})\nPrice: ₦${product.price}\n\nPlease contact me with availability and purchase details. Thank you!`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-dark !px-4 !py-2.5 text-xs"
+                      >
+                        <MessageCircle className="h-3.5 w-3.5" /> Order
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -248,42 +181,31 @@ export default function ProductsPage() {
           </div>
         )}
 
-        {/* ── Bottom CTA ── */}
+        {/* Bottom CTA */}
         {filtered.length > 0 && (
-          <div className="mt-12 bg-navy rounded-2xl overflow-hidden">
-            <div className="h-1" style={{ backgroundColor: "#F59E0B" }} />
-            <div className="p-8 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <div>
-                <h3 className="text-white font-bold text-lg sm:text-xl mb-1" style={{ fontFamily: "Poppins, sans-serif" }}>
-                  Not sure which products you need?
-                </h3>
-                <p className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-                  Our engineers will design a complete system tailored to your energy load and budget.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-                <Link
-                  href="/contact"
-                  className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: "#F59E0B" }}
-                >
-                  <ShieldCheck className="w-4 h-4" /> Get Expert Help
-                </Link>
-                <a
-                  href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hi Voltara! I need help selecting the right solar products for my home.")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-colors"
-                  style={{ border: "1.5px solid rgba(255,255,255,0.25)" }}
-                >
-                  <Phone className="w-4 h-4" /> WhatsApp Us
-                </a>
-              </div>
+          <div className="dot-grid mt-12 flex flex-col items-start justify-between gap-6 rounded-[1.5rem] bg-navy p-8 sm:flex-row sm:items-center sm:p-10">
+            <div>
+              <h3 className="display text-xl text-white">Not sure which products you need?</h3>
+              <p className="mt-1 text-sm text-white/60">
+                Our engineers will design a complete system tailored to your energy load and budget.
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+              <Link href="/contact" className="btn btn-primary">
+                <ShieldCheck className="h-4 w-4" /> Get expert help
+              </Link>
+              <a
+                href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hi Voltara! I need help selecting the right solar products for my home.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-light"
+              >
+                <Phone className="h-4 w-4" /> WhatsApp us
+              </a>
             </div>
           </div>
         )}
       </div>
-
     </div>
   );
 }

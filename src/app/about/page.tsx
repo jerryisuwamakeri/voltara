@@ -1,139 +1,85 @@
 import Link from "next/link";
 import { ArrowRight, Zap, Cpu, Leaf, Award, Shield, Target, Eye } from "lucide-react";
 import { TIMELINE, VALUES } from "@/lib/data";
+import PageHero from "@/components/ui/PageHero";
+import Reveal from "@/components/ui/Reveal";
 
 const VALUE_ICONS = { zap: Zap, cpu: Cpu, leaf: Leaf, award: Award, shield: Shield };
 
+const IMPACT = [
+  { value: "50+", label: "Happy Customers", sub: "Homes & businesses powered" },
+  { value: "250kVA", label: "Solar Installed", sub: "Clean energy deployed" },
+  { value: "99.9%", label: "System Uptime", sub: "Reliable performance" },
+  { value: "6", label: "Office Locations", sub: "Across Nigeria" },
+];
+
 export default function AboutPage() {
   return (
-    <div className="min-h-screen">
-
-      {/* Hero */}
-      <div className="bg-navy pt-24 pb-12 sm:pt-28 sm:pb-20">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <span
-            className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-4"
-            style={{ backgroundColor: "rgba(245,158,11,0.15)", color: "#F59E0B", border: "1px solid rgba(245,158,11,0.3)" }}
-          >
-            About VOLTARA
-          </span>
-          <h1
-            className="text-2xl sm:text-4xl lg:text-6xl font-bold text-white mb-5"
-            style={{ fontFamily: "Poppins, sans-serif" }}
-          >
-            Where Innovation{" "}
-            <span className="text-gradient">Meets Purpose</span>
-          </h1>
-          <p className="max-w-2xl mx-auto text-lg" style={{ color: "rgba(255,255,255,0.65)" }}>
-            VOLTARA represents the perfect fusion of solar energy and electrical
-            expertise. We&apos;re committed to transforming how businesses and homes
-            consume energy — making clean power accessible, affordable, and reliable.
-          </p>
-
-          {/* Lonegroup attribution */}
-          <a
-            href="https://lonegroup.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 mt-8 px-6 py-3 rounded-2xl transition-colors duration-200"
-            style={{
-              backgroundColor: "rgba(245,158,11,0.12)",
-              border: "1px solid rgba(245,158,11,0.3)",
-            }}
-          >
-            <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>
-              Voltara Energies is a product of
-            </span>
-            <span className="text-sm font-bold" style={{ color: "#F59E0B" }}>
-              Lonegroup
-            </span>
-            <span className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
-              (LONE INT&apos;L LIMITED · RC2001247)
-            </span>
-          </a>
-        </div>
-      </div>
+    <div>
+      <PageHero
+        kicker="About VOLTARA"
+        title={<>Where innovation meets <span className="text-gold">purpose</span></>}
+        intro="VOLTARA is the fusion of solar engineering and electrical expertise — committed to transforming how Nigerian homes and businesses consume energy, making clean power accessible, affordable, and reliable."
+      >
+        <a
+          href="https://lonegroup.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-2xl border border-gold/30 bg-gold/10 px-6 py-3 transition-colors hover:border-gold/50"
+        >
+          <span className="text-sm text-white/70">Voltara Energies is a product of</span>
+          <span className="text-sm font-bold text-gold">Lonegroup</span>
+          <span className="text-xs text-white/50">(LONE INT&apos;L LIMITED · RC2001247)</span>
+        </a>
+      </PageHero>
 
       {/* Mission & Vision */}
-      <section className="py-12 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="section bg-white">
+        <div className="shell container-px">
           <div className="mb-12">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: "#F59E0B" }}>
-              What drives us
-            </p>
-            <h2
-              className="text-xl sm:text-2xl lg:text-4xl font-bold text-slate-900"
-              style={{ fontFamily: "Poppins, sans-serif" }}
-            >
-              Mission, Vision &amp; Values
-            </h2>
+            <span className="eyebrow">What drives us</span>
+            <h2 className="display display-lg mt-4">Mission, vision &amp; values</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
-
-            {/* Mission */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-8 transition-shadow hover:shadow-lg">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
-                style={{ backgroundColor: "#F59E0B" }}
-              >
-                <Target className="w-6 h-6 text-white" />
-              </div>
-              <h3
-                className="text-xl font-bold text-slate-900 mb-3"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Our Mission
-              </h3>
-              <p className="text-slate-600 leading-relaxed">
-                To democratize access to clean energy by providing innovative,
-                reliable, and affordable solar solutions that empower individuals,
-                businesses, and communities to achieve energy independence while
-                contributing to a sustainable future.
+          <div className="mb-14 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="card p-9">
+              <span className="chip-solid inline-flex h-12 w-12 items-center justify-center rounded-xl">
+                <Target className="h-6 w-6" />
+              </span>
+              <h3 className="display mt-5 text-xl">Our Mission</h3>
+              <p className="mt-3 leading-relaxed text-[#5b6675]">
+                To democratize access to clean energy through innovative, reliable, and affordable solar
+                solutions that empower individuals, businesses, and communities to achieve energy
+                independence while contributing to a sustainable future.
               </p>
             </div>
 
-            {/* Vision */}
-            <div className="bg-navy rounded-2xl p-8 transition-shadow hover:shadow-lg">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
-                style={{ backgroundColor: "#F59E0B" }}
-              >
-                <Eye className="w-6 h-6 text-white" />
-              </div>
-              <h3
-                className="text-xl font-bold text-white mb-3"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Our Vision
-              </h3>
-              <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.7)" }}>
-                To be the leading provider of integrated solar and electrical
-                solutions in Nigeria, recognized for excellence, innovation, and
-                our unwavering commitment to powering communities sustainably for
-                generations to come.
+            <div className="dot-grid rounded-[1.25rem] bg-navy p-9">
+              <span className="chip-solid inline-flex h-12 w-12 items-center justify-center rounded-xl">
+                <Eye className="h-6 w-6" />
+              </span>
+              <h3 className="display mt-5 text-xl text-white">Our Vision</h3>
+              <p className="mt-3 leading-relaxed text-white/70">
+                To be the leading provider of integrated solar and electrical solutions in Nigeria —
+                recognized for excellence, innovation, and an unwavering commitment to powering
+                communities sustainably for generations to come.
               </p>
             </div>
           </div>
 
-          {/* Values */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {VALUES.map((v) => {
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {VALUES.map((v, i) => {
               const Icon = VALUE_ICONS[v.icon as keyof typeof VALUE_ICONS] ?? Zap;
               return (
-                <div
-                  key={v.title}
-                  className="bg-white rounded-2xl border border-slate-200 p-6 transition-shadow hover:shadow-md"
-                >
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
-                    style={{ backgroundColor: "#F59E0B" }}
-                  >
-                    <Icon className="w-5 h-5 text-white" />
+                <Reveal key={v.title} delay={i * 60}>
+                  <div className="card card-hover h-full p-7">
+                    <span className="chip">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <h3 className="display mt-5 text-base">{v.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[#5b6675]">{v.desc}</p>
                   </div>
-                  <h3 className="font-semibold text-slate-900 text-base mb-2">{v.title}</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">{v.desc}</p>
-                </div>
+                </Reveal>
               );
             })}
           </div>
@@ -141,120 +87,75 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="bg-navy py-12 lg:py-20">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="mb-12">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: "#F59E0B" }}>
-              Our Journey
-            </p>
-            <h2
-              className="text-xl sm:text-2xl lg:text-4xl font-bold text-white"
-              style={{ fontFamily: "Poppins, sans-serif" }}
-            >
-              Powering Nigeria Since 2018
-            </h2>
+      <section className="relative bg-navy dot-grid">
+        <svg className="wave absolute left-0 top-0 -translate-y-px rotate-180" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden>
+          <path fill="#ffffff" d="M0,48 C240,90 480,90 720,60 C960,30 1200,30 1440,56 L1440,90 L0,90 Z" />
+        </svg>
+        <div className="shell container-px section pt-24">
+          <div className="mb-12 max-w-2xl">
+            <span className="eyebrow text-gold">Our journey</span>
+            <h2 className="display display-lg mt-4 text-white">Powering Nigeria since 2018</h2>
           </div>
 
-          <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-8 top-0 bottom-0 w-px" style={{ backgroundColor: "rgba(255,255,255,0.12)" }} />
-
-            <div className="space-y-6">
+          <div className="relative max-w-3xl">
+            <div className="absolute bottom-0 left-8 top-0 w-px bg-white/12" />
+            <div className="space-y-5">
               {TIMELINE.map((item) => (
-                <div key={item.year} className="flex items-center gap-6">
-                  <div
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 z-10 relative"
-                    style={{ backgroundColor: "#F59E0B" }}
-                  >
-                    <span
-                      className="text-white font-bold text-sm"
-                      style={{ fontFamily: "Poppins, sans-serif" }}
-                    >
-                      {item.year}
-                    </span>
+                <Reveal key={item.year} className="flex items-center gap-6">
+                  <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gold">
+                    <span className="display text-sm text-[#1a1205]">{item.year}</span>
                   </div>
-                  <div
-                    className="flex-1 rounded-xl px-5 py-4"
-                    style={{ backgroundColor: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
-                  >
-                    <p className="text-white font-medium">{item.event}</p>
+                  <div className="flex-1 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4">
+                    <p className="font-medium text-white">{item.event}</p>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </div>
+        <svg className="wave absolute bottom-0 left-0 translate-y-px" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden>
+          <path fill="#f6f7f9" d="M0,48 C240,90 480,90 720,60 C960,30 1200,30 1440,56 L1440,90 L0,90 Z" />
+        </svg>
       </section>
 
-      {/* Stats */}
-      <section className="py-12 lg:py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4">
+      {/* Impact */}
+      <section className="section bg-cream pt-24">
+        <div className="shell container-px">
           <div className="mb-12">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: "#F59E0B" }}>By the numbers</p>
-            <h2
-              className="text-3xl lg:text-4xl font-bold text-slate-900"
-              style={{ fontFamily: "Poppins, sans-serif" }}
-            >
-              Our Impact in Nigeria
-            </h2>
+            <span className="eyebrow">By the numbers</span>
+            <h2 className="display display-lg mt-4">Our impact in Nigeria</h2>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { value: "50+",    label: "Happy Customers",   sub: "Homes & businesses powered" },
-              { value: "250kVA", label: "Solar Installed",   sub: "Clean energy deployed" },
-              { value: "99.9%",  label: "System Uptime",     sub: "Reliable performance" },
-              { value: "6",      label: "Office Locations",  sub: "Across Nigeria" },
-            ].map((s) => (
-              <div
-                key={s.label}
-                className="bg-white rounded-2xl border border-slate-200 p-6 text-center transition-shadow hover:shadow-md"
-              >
-                <div
-                  className="text-4xl font-bold text-gradient mb-1"
-                  style={{ fontFamily: "Poppins, sans-serif" }}
-                >
-                  {s.value}
+          <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+            {IMPACT.map((s, i) => (
+              <Reveal key={s.label} delay={i * 70}>
+                <div className="card card-hover h-full p-7 text-center">
+                  <div className="display text-4xl text-gold-dark">{s.value}</div>
+                  <div className="mt-1 text-sm font-semibold text-ink">{s.label}</div>
+                  <div className="mt-0.5 text-xs text-[#94a3b8]">{s.sub}</div>
                 </div>
-                <div className="font-semibold text-slate-900 text-sm mb-0.5">{s.label}</div>
-                <div className="text-slate-400 text-xs">{s.sub}</div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-12 sm:py-20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2
-            className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4"
-            style={{ fontFamily: "Poppins, sans-serif" }}
-          >
-            Join the VOLTARA Family
-          </h2>
-          <p className="text-slate-600 text-lg mb-8 max-w-xl mx-auto">
-            Join thousands of satisfied customers who&apos;ve made the switch to
-            clean, sustainable energy across Nigeria.
+      <section className="section bg-white">
+        <div className="shell container-px text-center">
+          <h2 className="display display-lg mx-auto max-w-2xl">Join the VOLTARA family</h2>
+          <p className="lead mx-auto mt-4 max-w-xl">
+            Thousands of satisfied customers have made the switch to clean, sustainable energy across Nigeria.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/packages"
-              className="px-8 py-4 rounded-2xl text-base font-semibold text-white flex items-center gap-2 transition-all duration-200"
-              style={{ backgroundColor: "#F59E0B" }}
-            >
-              View Our Packages
-              <ArrowRight className="w-5 h-5" />
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link href="/packages" className="btn btn-primary">
+              View our packages <ArrowRight className="h-5 w-5" />
             </Link>
-            <Link
-              href="/contact"
-              className="px-8 py-4 rounded-2xl text-base font-semibold border-2 border-slate-200 text-slate-900 transition-all duration-200 hover:border-amber-400 hover:text-amber-500"
-            >
-              Contact Us
+            <Link href="/contact" className="btn btn-outline">
+              Contact us
             </Link>
           </div>
         </div>
       </section>
-
     </div>
   );
 }

@@ -1,82 +1,66 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-import { Star, TrendingUp } from "lucide-react";
+import { Star, Quote } from "lucide-react";
 import { TESTIMONIALS } from "@/lib/data";
+import Reveal from "@/components/ui/Reveal";
+
+const AVATAR_TONES = ["bg-[#0a1a33]", "bg-gold-dark", "bg-[#1f3a63]"];
+
+function initials(name: string) {
+  return name.split(" ").map((n) => n[0]).slice(0, 2).join("");
+}
 
 export default function TestimonialsSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.06 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section className="py-12 sm:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
-
-        <div className="mb-12">
-          <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: "#F59E0B" }}>
-            Customer Stories
+    <section className="section bg-white">
+      <div className="shell container-px">
+        <div className="mb-12 max-w-2xl">
+          <span className="eyebrow">Customer stories</span>
+          <h2 className="display display-lg mt-4">Real savings, real people</h2>
+          <p className="lead mt-4">
+            Homes and businesses across Nigeria that swapped unreliable grid power for clean, dependable solar.
           </p>
-          <h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900"
-            style={{ fontFamily: "Poppins, sans-serif" }}
-          >
-            Real savings, real people
-          </h2>
         </div>
 
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {TESTIMONIALS.map((t, i) => (
-            <div
-              key={t.name}
-              className="bg-white rounded-2xl p-7 border border-slate-200 hover:shadow-md transition-shadow duration-200"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(20px)",
-                transition: `opacity 0.55s ease ${i * 0.1}s, transform 0.55s ease ${i * 0.1}s`,
-              }}
-            >
-              <div className="flex gap-0.5 mb-4">
-                {Array.from({ length: t.rating }).map((_, j) => (
-                  <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
+            <Reveal key={t.name} delay={i * 90}>
+              <figure className="card card-hover flex h-full flex-col p-8">
+                <Quote className="h-7 w-7 text-gold/40" />
+                <blockquote className="mt-4 flex-1 text-[0.98rem] leading-relaxed text-[#3f4a59]">
+                  {t.quote}
+                </blockquote>
 
-              <p className="text-slate-700 text-sm leading-relaxed mb-6">
-                &ldquo;{t.quote}&rdquo;
-              </p>
+                <div className="mt-6 flex gap-0.5">
+                  {Array.from({ length: t.rating }).map((_, j) => (
+                    <Star key={j} className="h-4 w-4 fill-gold text-gold" />
+                  ))}
+                </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                <div>
-                  <div className="font-semibold text-slate-900 text-sm">{t.name}</div>
-                  <div className="text-slate-400 text-xs mt-0.5">{t.title}</div>
-                </div>
-                <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-green-50 text-green-700 border border-green-100">
-                  <TrendingUp className="w-3 h-3" />
-                  {t.savings}
-                </div>
-              </div>
-            </div>
+                <figcaption className="mt-5 flex items-center gap-3 border-t border-[#eef1f5] pt-5">
+                  <span
+                    className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold text-white ${AVATAR_TONES[i % AVATAR_TONES.length]}`}
+                  >
+                    {initials(t.name)}
+                  </span>
+                  <span>
+                    <span className="block text-sm font-semibold text-ink">{t.name}</span>
+                    <span className="block text-xs text-[#94a3b8]">{t.title}</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </Reveal>
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16 py-6 border-t border-slate-100">
-          {["25-Year Panel Warranty", "Certified Installation", "24/7 Support", "Flexible Financing"].map((item) => (
-            <div key={item} className="flex items-center gap-2 text-slate-600 text-sm">
-              <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-              {item}
-            </div>
-          ))}
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 border-t border-[#eef1f5] pt-8">
+          {["25-Year panel warranty", "Certified installation", "Dedicated support", "Flexible financing"].map(
+            (item) => (
+              <div key={item} className="flex items-center gap-2 text-sm text-[#5b6675]">
+                <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+                {item}
+              </div>
+            ),
+          )}
         </div>
-
       </div>
     </section>
   );

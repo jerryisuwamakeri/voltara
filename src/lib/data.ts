@@ -478,6 +478,29 @@ export const OFFICES = [
   { city: "Ekiti",        address: "Isaba, Ikole Ekiti, Ekiti State",                          label: "Branch Office" },
 ];
 
+export const FAQS = [
+  {
+    q: "How much does a solar system cost?",
+    a: "Our residential packages run from ₦950,000 for a 1.5kVA starter system up to ₦7.9M for a 10kVA whole-home setup. You can start with a 30% deposit and spread the balance over 10 months or 40 weeks.",
+  },
+  {
+    q: "Do you handle installation?",
+    a: "Yes. Certified installation by our in-house engineers is included in every package — wiring, mounting, configuration, and testing. We don't hand you a box and leave.",
+  },
+  {
+    q: "What happens when there's no sun?",
+    a: "Your battery bank stores energy for evenings and cloudy days, and our hybrid inverters can top up from the grid or a generator when needed. We size each system to your real daily usage.",
+  },
+  {
+    q: "Is there a warranty?",
+    a: "Every system carries a 5-year warranty on major components, with panels warrantied up to 25 years. Our support team stays available before, during, and long after installation.",
+  },
+  {
+    q: "Can I start small and expand later?",
+    a: "Absolutely. Many customers begin with essentials and scale up. Our lithium battery systems are stackable and our inverters are sized to leave room for growth.",
+  },
+];
+
 export const COMMON_APPLIANCES = [
   { name: "LED Bulb", watts: 10 },
   { name: "Ceiling Fan", watts: 75 },

@@ -61,53 +61,41 @@ const OFFICES = [
 export default function Footer() {
   return (
     <footer className="bg-navy text-white">
-
-      {/* Main body */}
-      <div className="max-w-7xl mx-auto px-4 py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="shell container-px py-16">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
 
           {/* Brand */}
           <div>
-            <Link href="/" className="inline-block mb-5">
+            <Link href="/" className="mb-5 inline-block">
               <Image
                 src="/voltara-logo.png"
                 alt="VOLTARA"
-                width={45}
-                height={30}
+                width={48}
+                height={32}
                 style={{ height: "auto", filter: "brightness(0) invert(1)" }}
               />
             </Link>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(255,255,255,0.55)" }}>
-              The perfect fusion of solar energy and electrical expertise,
-              powering Nigeria&apos;s future sustainably since 2018.
+            <p className="mb-4 text-sm leading-relaxed text-white/55">
+              The perfect fusion of solar energy and electrical expertise, powering Nigeria&apos;s future sustainably since 2018.
             </p>
-            <p className="text-xs mb-5" style={{ color: "rgba(255,255,255,0.35)" }}>
-              Mon – Sat: 8am – 6pm
-            </p>
+            <p className="mb-6 text-xs text-white/35">Mon – Sat · 8am – 6pm</p>
 
             {/* Lonegroup attribution */}
-            <a
-              href="https://lonegroup.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex flex-col gap-0.5 rounded-xl px-4 py-3 mb-5 transition-colors duration-200"
-              style={{
-                backgroundColor: "rgba(245,158,11,0.1)",
-                border: "1px solid rgba(245,158,11,0.25)",
-              }}
-            >
-              <span className="text-xs uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.45)" }}>
+            <div className="mb-6 border-l-2 border-gold/50 pl-3">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/35">
                 A product of
-              </span>
-              <span className="text-sm font-bold" style={{ color: "#F59E0B" }}>
-                Lonegroup
-              </span>
-              <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
-                LONE INT&apos;L LIMITED · RC2001247
-              </span>
-            </a>
+              </p>
+              <a
+                href="https://lonegroup.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-1 inline-flex items-baseline gap-2 transition-colors"
+              >
+                <span className="text-base font-bold text-white group-hover:text-gold">Lonegroup</span>
+                <span className="text-[0.7rem] font-medium text-white/40">LONE INT&apos;L · RC2001247</span>
+              </a>
+            </div>
 
-            {/* Social links */}
             <div className="flex items-center gap-2">
               {SOCIALS.map(({ label, href, svg }) => (
                 <a
@@ -116,12 +104,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200"
-                  style={{
-                    backgroundColor: "rgba(255,255,255,0.07)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    color: "rgba(255,255,255,0.55)",
-                  }}
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/55 transition-colors hover:border-gold/40 hover:text-gold"
                 >
                   {svg}
                 </a>
@@ -131,18 +114,15 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-xs uppercase tracking-widest mb-5" style={{ color: "#F59E0B" }}>
-              Quick Links
-            </h4>
+            <h4 className="mb-5 text-xs font-bold uppercase tracking-widest text-gold">Quick Links</h4>
             <ul className="space-y-2.5">
               {QUICK_LINKS.map((link) => (
                 <li key={link.path}>
                   <Link
                     href={link.path}
-                    className="flex items-center gap-2 text-sm transition-colors duration-200"
-                    style={{ color: "rgba(255,255,255,0.55)" }}
+                    className="flex items-center gap-2 text-sm text-white/55 transition-colors hover:text-white"
                   >
-                    <ArrowRight className="w-3 h-3 text-amber-500 shrink-0" />
+                    <ArrowRight className="h-3 w-3 shrink-0 text-gold" />
                     {link.label}
                   </Link>
                 </li>
@@ -152,18 +132,15 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold text-xs uppercase tracking-widest mb-5" style={{ color: "#F59E0B" }}>
-              Our Services
-            </h4>
+            <h4 className="mb-5 text-xs font-bold uppercase tracking-widest text-gold">Our Services</h4>
             <ul className="space-y-2.5">
               {SERVICES_LINKS.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.path}
-                    className="flex items-center gap-2 text-sm transition-colors duration-200"
-                    style={{ color: "rgba(255,255,255,0.55)" }}
+                    className="flex items-center gap-2 text-sm text-white/55 transition-colors hover:text-white"
                   >
-                    <ArrowRight className="w-3 h-3 text-amber-500 shrink-0" />
+                    <ArrowRight className="h-3 w-3 shrink-0 text-gold" />
                     {link.label}
                   </Link>
                 </li>
@@ -173,83 +150,55 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold text-xs uppercase tracking-widest mb-5" style={{ color: "#F59E0B" }}>
-              Contact Us
-            </h4>
-            <ul className="space-y-4 mb-5">
+            <h4 className="mb-5 text-xs font-bold uppercase tracking-widest text-gold">Contact Us</h4>
+            <ul className="mb-5 space-y-4">
               <li>
-                <a
-                  href="mailto:voltaraenergies@gmail.com"
-                  className="flex items-start gap-3 text-sm transition-colors"
-                  style={{ color: "rgba(255,255,255,0.55)" }}
-                >
-                  <Mail className="w-4 h-4 mt-0.5 shrink-0 text-amber-400" />
+                <a href="mailto:voltaraenergies@gmail.com" className="flex items-start gap-3 text-sm text-white/55 transition-colors hover:text-white">
+                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                   voltaraenergies@gmail.com
                 </a>
               </li>
               <li>
-                <a
-                  href="https://wa.me/2349131797237"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-3 text-sm transition-colors"
-                  style={{ color: "rgba(255,255,255,0.55)" }}
-                >
-                  <Phone className="w-4 h-4 mt-0.5 shrink-0 text-amber-400" />
+                <a href="https://wa.me/2349131797237" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 text-sm text-white/55 transition-colors hover:text-white">
+                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                   09131797237
                 </a>
               </li>
             </ul>
 
-            <p className="text-xs uppercase tracking-widest font-medium mb-3" style={{ color: "rgba(255,255,255,0.4)" }}>
-              Offices
-            </p>
+            <p className="mb-3 text-xs font-medium uppercase tracking-widest text-white/40">Offices</p>
             {OFFICES.map((o) => (
-              <div key={o.city} className="flex items-start gap-3 mb-3">
-                <MapPin className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-400" />
+              <div key={o.city} className="mb-3 flex items-start gap-3">
+                <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold" />
                 <div>
-                  <div className="text-xs font-semibold" style={{ color: "rgba(255,255,255,0.75)" }}>{o.city}</div>
-                  <div className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>{o.address}</div>
+                  <div className="text-xs font-semibold text-white/75">{o.city}</div>
+                  <div className="text-xs text-white/45">{o.address}</div>
                 </div>
               </div>
             ))}
           </div>
-
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-        <div className="max-w-7xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-center sm:text-left" style={{ color: "rgba(255,255,255,0.35)" }}>
-            &copy; {new Date().getFullYear()} VOLTARA Solar &amp; Electrical Solutions. All rights reserved.
-            {" "}A product of{" "}
-            <a
-              href="https://lonegroup.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold"
-              style={{ color: "#F59E0B" }}
-            >
+      <div className="border-t border-white/10">
+        <div className="shell container-px flex flex-col items-center justify-between gap-3 py-5 sm:flex-row">
+          <p className="text-center text-xs text-white/40 sm:text-left">
+            &copy; {new Date().getFullYear()} VOLTARA Solar &amp; Electrical Solutions. A product of{" "}
+            <a href="https://lonegroup.org" target="_blank" rel="noopener noreferrer" className="font-semibold text-gold">
               Lonegroup
             </a>{" "}
             (LONE INT&apos;L LIMITED · RC2001247).
           </p>
-          <div className="flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-wrap justify-center gap-4">
             {["Privacy Policy", "Terms of Service", "Warranty Policy"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="text-xs transition-colors"
-                style={{ color: "rgba(255,255,255,0.35)" }}
-              >
+              <a key={item} href="#" className="text-xs text-white/40 transition-colors hover:text-white/70">
                 {item}
               </a>
             ))}
           </div>
         </div>
       </div>
-
     </footer>
   );
 }

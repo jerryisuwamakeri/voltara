@@ -1,74 +1,55 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-import { Star, Wrench, BadgeCheck, Banknote, Clock, Headphones } from "lucide-react";
+import { Star, Wrench, ShieldCheck, Banknote, MapPin, Headphones } from "lucide-react";
 import { WHY_VOLTARA } from "@/lib/data";
+import Reveal from "@/components/ui/Reveal";
 
 const ICONS = {
-  star: Star, wrench: Wrench, "badge-check": BadgeCheck,
-  banknote: Banknote, clock: Clock, headphones: Headphones,
+  shield: ShieldCheck,
+  wrench: Wrench,
+  banknote: Banknote,
+  star: Star,
+  "map-pin": MapPin,
+  headphones: Headphones,
 };
 
 export default function WhyVoltara() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.06 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section className="bg-navy py-12 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="relative bg-navy dot-grid">
+      {/* top wave from the cream section above */}
+      <svg className="wave absolute left-0 top-0 -translate-y-px rotate-180" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden>
+        <path fill="#f6f7f9" d="M0,48 C240,90 480,90 720,60 C960,30 1200,30 1440,56 L1440,90 L0,90 Z" />
+      </svg>
 
-        <div className="mb-12">
-          <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: "#F59E0B" }}>
-            Why VOLTARA
+      <div className="shell container-px section pt-24">
+        <div className="mb-12 max-w-2xl">
+          <span className="eyebrow text-gold">Why VOLTARA</span>
+          <h2 className="display display-lg mt-4 text-white">The difference is in the details</h2>
+          <p className="mt-4 text-white/60">
+            Engineering discipline, honest pricing, and a team that stays with you long after the panels go up.
           </p>
-          <h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white"
-            style={{ fontFamily: "Poppins, sans-serif" }}
-          >
-            The difference is in the details
-          </h2>
         </div>
 
-        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {WHY_VOLTARA.map((item, i) => {
             const Icon = ICONS[item.icon as keyof typeof ICONS] ?? Star;
             return (
-              <div
-                key={item.title}
-                className="p-6 rounded-2xl"
-                style={{
-                  backgroundColor: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.09)",
-                  opacity: visible ? 1 : 0,
-                  transform: visible ? "translateY(0)" : "translateY(20px)",
-                  transition: `opacity 0.5s ease ${i * 0.08}s, transform 0.5s ease ${i * 0.08}s`,
-                }}
-              >
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
-                  style={{ backgroundColor: "#F59E0B" }}
-                >
-                  <Icon className="w-5 h-5 text-white" />
+              <Reveal key={item.title} delay={i * 70}>
+                <div className="h-full rounded-2xl border border-white/10 bg-white/[0.04] p-7 transition-colors hover:border-white/25 hover:bg-white/[0.07]">
+                  <span className="chip-dark inline-flex h-12 w-12 items-center justify-center rounded-xl">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="display mt-5 text-lg text-white">{item.title}</h3>
+                  <p className="mt-2 text-[0.9rem] leading-relaxed text-white/55">{item.desc}</p>
                 </div>
-                <h3 className="text-white font-semibold text-sm mb-1.5">{item.title}</h3>
-                <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
-                  {item.desc}
-                </p>
-              </div>
+              </Reveal>
             );
           })}
         </div>
-
       </div>
+
+      {/* bottom wave into the white section below */}
+      <svg className="wave absolute bottom-0 left-0 translate-y-px" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden>
+        <path fill="#ffffff" d="M0,48 C240,90 480,90 720,60 C960,30 1200,30 1440,56 L1440,90 L0,90 Z" />
+      </svg>
     </section>
   );
 }

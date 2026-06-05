@@ -1,52 +1,36 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight, Phone } from "lucide-react";
 
 export default function CTASection() {
   return (
-    <section className="py-12 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="bg-navy rounded-2xl overflow-hidden">
-          {/* Gold top bar */}
-          <div className="h-1.5 w-full" style={{ backgroundColor: "#F59E0B" }} />
+    <section className="section bg-white">
+      <div className="shell container-px">
+        <div className="dot-grid relative overflow-hidden rounded-[2rem] bg-navy px-8 py-16 text-center sm:px-14 sm:py-20">
+          {/* soft amber glow */}
+          <div
+            className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(245,158,11,0.18), transparent 65%)" }}
+          />
+          <span className="eyebrow eyebrow-center text-gold">Get started today</span>
+          <h2 className="display mx-auto mt-4 max-w-2xl text-3xl text-white sm:text-5xl">
+            Ready to go solar with <span className="text-gold">VOLTARA?</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-xl text-white/65">
+            Join the homes and businesses already powered by clean, reliable energy across Nigeria. Get a free consultation and a system sized to your needs.
+          </p>
 
-          <div className="px-8 sm:px-14 py-16 text-center">
-            <p className="text-sm font-bold uppercase tracking-widest mb-4" style={{ color: "#F59E0B" }}>
-              Get Started Today
-            </p>
-            <h2
-              className="text-3xl lg:text-5xl font-bold text-white mb-4 max-w-2xl mx-auto"
-              style={{ fontFamily: "Poppins, sans-serif" }}
+          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link href="/packages" className="btn btn-primary">
+              Explore packages <ArrowRight className="h-5 w-5" />
+            </Link>
+            <a
+              href="https://wa.me/2349131797237"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-light"
             >
-              Ready to go solar with VOLTARA?
-            </h2>
-            <p className="max-w-xl mx-auto text-base mb-10" style={{ color: "rgba(255,255,255,0.6)" }}>
-              Join 50+ homes and businesses already powered by clean, reliable solar energy across Nigeria.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/packages"
-                className="flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold text-white transition-colors duration-200 w-full sm:w-auto justify-center"
-                style={{ backgroundColor: "#F59E0B" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "#d97706"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "#F59E0B"; }}
-              >
-                Explore Packages <ArrowRight className="w-5 h-5" />
-              </Link>
-              <a
-                href="https://wa.me/2349131797237"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold text-white transition-colors duration-200 w-full sm:w-auto justify-center"
-                style={{ border: "1.5px solid rgba(255,255,255,0.3)", backgroundColor: "transparent" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.07)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = "transparent"; }}
-              >
-                <Phone className="w-5 h-5" /> Chat on WhatsApp
-              </a>
-            </div>
+              <Phone className="h-5 w-5" /> Chat on WhatsApp
+            </a>
           </div>
         </div>
       </div>
