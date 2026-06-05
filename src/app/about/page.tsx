@@ -29,6 +29,28 @@ export default function AboutPage() {
             expertise. We&apos;re committed to transforming how businesses and homes
             consume energy — making clean power accessible, affordable, and reliable.
           </p>
+
+          {/* Lonegroup attribution */}
+          <a
+            href="https://lonegroup.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 mt-8 px-6 py-3 rounded-2xl transition-colors duration-200"
+            style={{
+              backgroundColor: "rgba(245,158,11,0.12)",
+              border: "1px solid rgba(245,158,11,0.3)",
+            }}
+          >
+            <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>
+              Voltara Energies is a product of
+            </span>
+            <span className="text-sm font-bold" style={{ color: "#F59E0B" }}>
+              Lonegroup
+            </span>
+            <span className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+              (LONE INT&apos;L LIMITED · RC2001247)
+            </span>
+          </a>
         </div>
       </div>
 

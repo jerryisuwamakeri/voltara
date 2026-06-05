@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(echo \"started pid $!\")",
+      "Bash(break)",
+      "Bash(echo \"pid $!\")",
+      "Bash(curl -s http://localhost:3002/about)",
+      "Bash(curl -s http://localhost:3002/)",
+      "Bash(kill 49899)"
+    ]
+  }
+}

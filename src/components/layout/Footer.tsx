@@ -85,6 +85,28 @@ export default function Footer() {
               Mon – Sat: 8am – 6pm
             </p>
 
+            {/* Lonegroup attribution */}
+            <a
+              href="https://lonegroup.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex flex-col gap-0.5 rounded-xl px-4 py-3 mb-5 transition-colors duration-200"
+              style={{
+                backgroundColor: "rgba(245,158,11,0.1)",
+                border: "1px solid rgba(245,158,11,0.25)",
+              }}
+            >
+              <span className="text-xs uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.45)" }}>
+                A product of
+              </span>
+              <span className="text-sm font-bold" style={{ color: "#F59E0B" }}>
+                Lonegroup
+              </span>
+              <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                LONE INT&apos;L LIMITED · RC2001247
+              </span>
+            </a>
+
             {/* Social links */}
             <div className="flex items-center gap-2">
               {SOCIALS.map(({ label, href, svg }) => (
@@ -201,6 +223,17 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-center sm:text-left" style={{ color: "rgba(255,255,255,0.35)" }}>
             &copy; {new Date().getFullYear()} VOLTARA Solar &amp; Electrical Solutions. All rights reserved.
+            {" "}A product of{" "}
+            <a
+              href="https://lonegroup.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold"
+              style={{ color: "#F59E0B" }}
+            >
+              Lonegroup
+            </a>{" "}
+            (LONE INT&apos;L LIMITED · RC2001247).
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             {["Privacy Policy", "Terms of Service", "Warranty Policy"].map((item) => (
