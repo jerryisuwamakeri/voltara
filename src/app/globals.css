@@ -4,11 +4,12 @@
    VOLTARA — Design System
    Navy + warm white + amber/gold accent.
 
-   IMPORTANT: this project (Turbopack + Tailwind v4) hoists custom
-   @layer blocks out as *unlayered* CSS, which would otherwise beat
-   Tailwind's layered utilities. So any default text color that must
-   be overridable by a utility (text-white, text-gold, …) is written
-   with :where() to give it ZERO specificity — utilities always win.
+   CASCADE NOTE (important): Tailwind v4 emits utilities inside
+   `@layer utilities`. An *unlayered* rule beats ANY layered rule
+   regardless of specificity, so design-system defaults that must be
+   overridable by a utility (text-white on a dark section, etc.) live
+   inside `@layer base`/`@layer components`. Tailwind's layer order is
+   theme → base → components → utilities, so utilities always win.
    ============================================================ */
 
 @theme {
@@ -25,151 +26,160 @@
   --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
-/* ── Base ── */
-*, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* ── Base (layered so utilities override) ── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
-body {
-  font-family: var(--font-sans);
-  background: #ffffff;
-  color: #4a5568;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  body {
+    font-family: var(--font-sans);
+    background: #ffffff;
+    color: #4a5568;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+  }
+
+  ::selection { background: rgba(245, 158, 11, 0.22); color: #0b1b33; }
 }
 
-/* zero-specificity defaults → text-* utilities always override */
-:where(h1, h2, h3, h4, h5) {
-  font-family: var(--font-display);
-  color: var(--color-ink);
-  letter-spacing: -0.02em;
-  line-height: 1.08;
-}
-
-::selection { background: rgba(245, 158, 11, 0.22); color: #0b1b33; }
-
+/* scrollbar — no utility conflict, fine unlayered */
 ::-webkit-scrollbar { width: 9px; }
 ::-webkit-scrollbar-track { background: #eef1f5; }
 ::-webkit-scrollbar-thumb { background: #c7d0db; border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-gold); }
 
-/* ── Legacy color helpers ── */
-.bg-navy { background-color: #0a1a33; }
-
-/* ── Layout primitives ── */
+/* ── Layout primitives (unlayered — never overridden by utilities) ── */
 .container-px { padding-left: 1.25rem; padding-right: 1.25rem; }
 @media (min-width: 640px) { .container-px { padding-left: 2rem; padding-right: 2rem; } }
 .section { padding-block: clamp(3.5rem, 7vw, 7rem); }
 .section-sm { padding-block: clamp(2.5rem, 5vw, 4.5rem); }
 .shell { width: 100%; max-width: 80rem; margin-inline: auto; }
+.bg-navy { background-color: #0a1a33; }
 
-/* ── Eyebrow / kicker label ── (color via :where so text-gold can brighten it on dark) */
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 0.6rem;
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+/* ── Components (layered so text-*, bg-* utilities can override color) ── */
+@layer components {
+
+  /* Eyebrow / kicker label */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--color-gold-dark);
+  }
+  .eyebrow::before {
+    content: ""; width: 1.6rem; height: 2px; border-radius: 2px; background: currentColor; opacity: .9;
+  }
+  .eyebrow-center::before { display: none; }
+
+  /* Headings */
+  .display { font-family: var(--font-display); font-weight: 600; line-height: 1.05; letter-spacing: -0.03em; color: var(--color-ink); }
+  .display-xl { font-size: clamp(2.4rem, 6vw, 4.4rem); }
+  .display-lg { font-size: clamp(1.9rem, 4.2vw, 3rem); }
+  .display-md { font-size: clamp(1.5rem, 3vw, 2.1rem); }
+
+  .lead { font-size: clamp(1rem, 1.6vw, 1.18rem); line-height: 1.65; color: #5b6675; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+    font-family: var(--font-sans); font-weight: 600; font-size: 0.94rem; line-height: 1;
+    padding: 0.95rem 1.6rem; border-radius: 999px; cursor: pointer; white-space: nowrap;
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .15s ease, box-shadow .2s ease;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 1.1rem; height: 1.1rem; flex-shrink: 0; }
+  .btn-primary { background: var(--color-gold); color: #1a1205; box-shadow: 0 8px 22px -10px rgba(245,158,11,.7); }
+  .btn-primary:hover { background: var(--color-gold-dark); color: #fff; }
+  .btn-dark { background: var(--color-navy); color: #fff; }
+  .btn-dark:hover { background: #16294a; }
+  .btn-outline { background: transparent; color: var(--color-ink); border: 1.5px solid var(--color-line); }
+  .btn-outline:hover { border-color: var(--color-gold); color: var(--color-gold-dark); }
+  .btn-light { background: rgba(255,255,255,.1); color: #fff; border: 1.5px solid rgba(255,255,255,.28); }
+  .btn-light:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.5); }
+
+  .link-arrow {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-weight: 600; font-size: 0.92rem; color: var(--color-gold-dark);
+    transition: gap .2s ease, color .2s ease;
+  }
+  .link-arrow:hover { gap: 0.7rem; color: var(--color-gold); }
+
+  /* Cards */
+  .card {
+    background: #fff; border: 1px solid var(--color-line); border-radius: 1.25rem;
+    transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  }
+  .card-hover:hover {
+    border-color: rgba(245,158,11,.4);
+    box-shadow: 0 22px 50px -28px rgba(11, 27, 51, .28);
+    transform: translateY(-3px);
+  }
+
+  /* Icon chip */
+  .chip, .chip-solid, .chip-dark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.75rem; height: 2.75rem; border-radius: 0.85rem; flex-shrink: 0;
+  }
+  .chip { background: var(--color-gold-soft); border: 1px solid #f6d9ad; color: var(--color-gold-dark); }
+  .chip-solid { background: var(--color-gold); border: 1px solid var(--color-gold); color: #1a1205; }
+  .chip-dark { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); color: var(--color-gold); }
+  .chip svg, .chip-solid svg, .chip-dark svg { width: 1.3rem; height: 1.3rem; stroke-width: 1.85; }
+
+  /* Pill badge */
+  .pill {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+    padding: .35rem .75rem; border-radius: 999px;
+    background: var(--color-gold-soft); color: var(--color-gold-dark); border: 1px solid #fde6c3;
+  }
+
+  /* FAQ accordion */
+  .faq-item { border-bottom: 1px solid var(--color-line); }
+  .faq-q {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1.35rem 0; text-align: left; cursor: pointer;
+    font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; color: var(--color-ink);
+  }
+  .faq-a { overflow: hidden; max-height: 0; transition: max-height .3s ease; }
+  .faq-a-inner { padding-bottom: 1.35rem; color: #5b6675; line-height: 1.6; font-size: .95rem; }
+
+  /* Inputs */
+  .field {
+    width: 100%; padding: 0.8rem 1rem; border: 1.5px solid var(--color-line); border-radius: 0.85rem;
+    font-size: 0.92rem; background: #fff; color: #0f172a; outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .field:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(245,158,11,.13); }
 }
-:where(.eyebrow) { color: var(--color-gold-dark); }
-.eyebrow::before {
-  content: ""; width: 1.6rem; height: 2px; border-radius: 2px; background: var(--color-gold);
-}
-.eyebrow-center::before { display: none; }
 
-/* ── Headings ── */
-.display { font-family: var(--font-display); font-weight: 600; line-height: 1.05; letter-spacing: -0.03em; }
-:where(.display) { color: var(--color-ink); }
-.display-xl { font-size: clamp(2.4rem, 6vw, 4.4rem); }
-.display-lg { font-size: clamp(1.9rem, 4.2vw, 3rem); }
-.display-md { font-size: clamp(1.5rem, 3vw, 2.1rem); }
-
+/* ── Effects (unlayered, no utility conflict) ── */
 .mark { color: var(--color-gold-dark); position: relative; white-space: nowrap; }
 .mark::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0.04em;
   height: 0.32em; background: rgba(245, 158, 11, 0.22); border-radius: 3px; z-index: -1;
 }
-
-.lead { font-size: clamp(1rem, 1.6vw, 1.18rem); line-height: 1.65; }
-:where(.lead) { color: #5b6675; }
-
-/* ── Buttons ── */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
-  font-family: var(--font-sans); font-weight: 600; font-size: 0.94rem; line-height: 1;
-  padding: 0.95rem 1.6rem; border-radius: 999px; cursor: pointer; white-space: nowrap;
-  transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .15s ease, box-shadow .2s ease;
-}
-.btn:active { transform: translateY(1px); }
-.btn svg { width: 1.1rem; height: 1.1rem; flex-shrink: 0; }
-.btn-primary { background: var(--color-gold); color: #1a1205; box-shadow: 0 8px 22px -10px rgba(245,158,11,.7); }
-.btn-primary:hover { background: var(--color-gold-dark); color: #fff; }
-.btn-dark { background: var(--color-navy); color: #fff; }
-.btn-dark:hover { background: #16294a; }
-.btn-outline { background: transparent; color: var(--color-ink); border: 1.5px solid var(--color-line); }
-.btn-outline:hover { border-color: var(--color-gold); color: var(--color-gold-dark); }
-.btn-light { background: rgba(255,255,255,.1); color: #fff; border: 1.5px solid rgba(255,255,255,.28); }
-.btn-light:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.5); }
-
-.link-arrow {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  font-weight: 600; font-size: 0.92rem; color: var(--color-gold-dark);
-  transition: gap .2s ease, color .2s ease;
-}
-.link-arrow:hover { gap: 0.7rem; color: var(--color-gold); }
-
-/* ── Cards ── */
-.card {
-  background: #fff; border: 1px solid var(--color-line); border-radius: 1.25rem;
-  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
-}
-.card-hover:hover {
-  border-color: rgba(245,158,11,.4);
-  box-shadow: 0 22px 50px -28px rgba(11, 27, 51, .28);
-  transform: translateY(-3px);
-}
-
-/* ── Icon chip ── (consistent box + enforced icon sizing) */
-.chip, .chip-solid, .chip-dark {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 2.75rem; height: 2.75rem; border-radius: 0.85rem; flex-shrink: 0;
-}
-.chip { background: var(--color-gold-soft); border: 1px solid #f6d9ad; color: var(--color-gold-dark); }
-.chip-solid { background: var(--color-gold); border: 1px solid var(--color-gold); color: #1a1205; }
-.chip-dark { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); color: var(--color-gold); }
-.chip svg, .chip-solid svg, .chip-dark svg { width: 1.3rem; height: 1.3rem; stroke-width: 1.85; }
-
-/* ── Pill badge ── */
-.pill {
-  display: inline-flex; align-items: center; gap: .4rem;
-  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
-  padding: .35rem .75rem; border-radius: 999px;
-  background: var(--color-gold-soft); color: var(--color-gold-dark); border: 1px solid #fde6c3;
-}
-
-/* ── Reveal on scroll ── */
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.is-in { opacity: 1; transform: none; }
-
-/* ── FAQ accordion ── */
-.faq-item { border-bottom: 1px solid var(--color-line); }
-.faq-q {
-  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: 1.35rem 0; text-align: left; cursor: pointer;
-  font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; color: var(--color-ink);
-}
-.faq-a { overflow: hidden; max-height: 0; transition: max-height .3s ease; }
-.faq-a-inner { padding-bottom: 1.35rem; color: #5b6675; line-height: 1.6; font-size: .95rem; }
-
-/* ── Inputs ── */
-.field {
-  width: 100%; padding: 0.8rem 1rem; border: 1.5px solid var(--color-line); border-radius: 0.85rem;
-  font-size: 0.92rem; background: #fff; color: #0f172a; outline: none;
-  transition: border-color .2s ease, box-shadow .2s ease;
-}
-.field:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(245,158,11,.13); }
-
-/* ── Wave divider ── */
 .wave { display: block; width: 100%; height: clamp(40px, 6vw, 90px); }
 
-/* ── Dot-grid texture for dark sections ── */
+/* ── Dark-section text (GUARANTEED override) ──
+   Descendant selectors give specificity (0,2,0), which beats the
+   text-white / text-ink utilities (0,1,0) no matter the layer order.
+   Any heading on a .bg-navy surface is white; inner .text-gold spans
+   are separate elements, so accent words stay gold. */
+.bg-navy h1, .bg-navy h2, .bg-navy h3, .bg-navy h4, .bg-navy h5,
+.bg-navy .display, .bg-navy .faq-q { color: #ffffff; }
+.bg-navy .lead { color: rgba(255, 255, 255, 0.66); }
+.bg-navy .eyebrow { color: var(--color-gold); }
+/* keep intentional amber accents amber even on dark */
+.bg-navy .text-gold, .bg-navy .mark { color: var(--color-gold); }
 .dot-grid {
   background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
   background-size: 22px 22px;

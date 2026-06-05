@@ -4,7 +4,7 @@ import { ArrowRight, Phone, ShieldCheck, Star } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <section className="relative isolate flex min-h-[92vh] flex-col justify-center overflow-hidden">
+    <section className="bg-navy relative isolate flex min-h-[92vh] flex-col justify-center overflow-hidden">
       {/* Background photo */}
       <Image
         src="/hero-solar.jpg"
