@@ -177,7 +177,7 @@ export default function PackagesPage() {
           <div>
             <h3 className="display text-xl text-white">Not sure which package fits your home?</h3>
             <p className="mt-1 text-sm text-white/60">
-              Call <a href="tel:09131797237" className="font-semibold text-gold">09131797237</a> or use our KVA calculator to find your perfect size.
+              Call <a href="tel:08057295214" className="font-semibold text-gold">08057295214</a> or use our KVA calculator to find your perfect size.
             </p>
           </div>
           <div className="flex shrink-0 flex-wrap gap-3">

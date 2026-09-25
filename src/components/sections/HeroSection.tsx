@@ -43,7 +43,7 @@ export default function HeroSection() {
               Explore Packages <ArrowRight className="h-5 w-5" />
             </Link>
             <a
-              href="https://wa.me/2349131797237"
+              href="https://wa.me/2348057295214"
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-light"

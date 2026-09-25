@@ -130,11 +130,11 @@ export default function ContactPage() {
                     <span className="block text-sm font-medium text-ink">voltaraenergies@gmail.com</span>
                   </span>
                 </a>
-                <a href="https://wa.me/2349131797237" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-[#f0fdf4]">
+                <a href="https://wa.me/2348057295214" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-[#f0fdf4]">
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#25D366] text-white"><MessageCircle className="h-5 w-5" /></span>
                   <span>
                     <span className="block text-xs text-[#94a3b8]">WhatsApp</span>
-                    <span className="block text-sm font-medium text-ink">09131797237</span>
+                    <span className="block text-sm font-medium text-ink">08057295214</span>
                   </span>
                 </a>
                 <div className="flex items-center gap-3 rounded-xl p-3">

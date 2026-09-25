@@ -1,5 +1,5 @@
-export const WHATSAPP = "2349131797237";
-export const PHONE_MAIN = "09131797237";
+export const WHATSAPP = "2348057295214";
+export const PHONE_MAIN = "08057295214";
 export const PHONE_SUPPORT = "08108173958";
 export const EMAIL = "voltaraenergies@gmail.com";
 

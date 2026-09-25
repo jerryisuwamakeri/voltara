@@ -159,9 +159,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/2349131797237" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 text-sm text-white/55 transition-colors hover:text-white">
+                <a href="https://wa.me/2348057295214" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 text-sm text-white/55 transition-colors hover:text-white">
                   <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                  09131797237
+                  08057295214
                 </a>
               </li>
             </ul>
