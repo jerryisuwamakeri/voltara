@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { X, Send, ChevronDown } from "lucide-react";
-import { WHATSAPP } from "@/lib/data";
+import { X, Send, ChevronDown, Phone } from "lucide-react";
+import { WHATSAPP, PHONE_MAIN } from "@/lib/data";
 
 const SUBJECTS = [
   "I want to buy a package",
@@ -121,6 +121,20 @@ export default function WhatsAppChat() {
             <p className="text-center text-[10px] text-slate-400">
               Opens WhatsApp with your message pre-filled
             </p>
+
+            {/* Call instead */}
+            <div className="flex items-center gap-3 pt-1">
+              <span className="h-px flex-1 bg-slate-200" />
+              <span className="text-[10px] uppercase tracking-widest text-slate-400">or</span>
+              <span className="h-px flex-1 bg-slate-200" />
+            </div>
+            <a
+              href={`tel:${PHONE_MAIN}`}
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 py-3 text-sm font-bold text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50"
+            >
+              <Phone className="w-4 h-4" />
+              Call {PHONE_MAIN}
+            </a>
           </div>
         </div>
       )}

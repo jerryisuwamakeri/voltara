@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Mail, Phone, MessageCircle, MapPin, ArrowRight } from "lucide-react";
+import { PHONE_MAIN, WHATSAPP } from "@/lib/data";
 
 const SOCIALS = [
   {
@@ -159,9 +160,15 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/2348057295214" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 text-sm text-white/55 transition-colors hover:text-white">
+                <a href={`tel:${PHONE_MAIN}`} className="flex items-start gap-3 text-sm text-white/55 transition-colors hover:text-white">
                   <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                  08057295214
+                  Call {PHONE_MAIN}
+                </a>
+              </li>
+              <li>
+                <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 text-sm text-white/55 transition-colors hover:text-white">
+                  <MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                  Chat on WhatsApp
                 </a>
               </li>
             </ul>

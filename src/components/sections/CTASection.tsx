@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, Phone, MessageCircle } from "lucide-react";
+import { PHONE_MAIN, WHATSAPP } from "@/lib/data";
 
 export default function CTASection() {
   return (
@@ -19,17 +20,20 @@ export default function CTASection() {
             Join the homes and businesses already powered by clean, reliable energy across Nigeria. Get a free consultation and a system sized to your needs.
           </p>
 
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col flex-wrap items-center justify-center gap-3 sm:flex-row">
             <Link href="/packages" className="btn btn-primary">
               Explore packages <ArrowRight className="h-5 w-5" />
             </Link>
+            <a href={`tel:${PHONE_MAIN}`} className="btn btn-light">
+              <Phone className="h-5 w-5" /> Call {PHONE_MAIN}
+            </a>
             <a
-              href="https://wa.me/2348057295214"
+              href={`https://wa.me/${WHATSAPP}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-light"
             >
-              <Phone className="h-5 w-5" /> Chat on WhatsApp
+              <MessageCircle className="h-5 w-5" /> Chat on WhatsApp
             </a>
           </div>
         </div>

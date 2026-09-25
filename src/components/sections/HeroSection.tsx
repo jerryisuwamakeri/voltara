@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Phone, ShieldCheck, Star } from "lucide-react";
+import { ArrowRight, Phone, MessageCircle, ShieldCheck, Star } from "lucide-react";
+import { PHONE_MAIN, WHATSAPP } from "@/lib/data";
 
 export default function HeroSection() {
   return (
@@ -38,17 +39,20 @@ export default function HeroSection() {
           </p>
 
           {/* CTAs */}
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col flex-wrap gap-3 sm:flex-row">
             <Link href="/packages" className="btn btn-primary">
               Explore Packages <ArrowRight className="h-5 w-5" />
             </Link>
+            <a href={`tel:${PHONE_MAIN}`} className="btn btn-light">
+              <Phone className="h-5 w-5" /> Call {PHONE_MAIN}
+            </a>
             <a
-              href="https://wa.me/2348057295214"
+              href={`https://wa.me/${WHATSAPP}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-light"
             >
-              <Phone className="h-5 w-5" /> Talk to an expert
+              <MessageCircle className="h-5 w-5" /> Chat on WhatsApp
             </a>
           </div>
 

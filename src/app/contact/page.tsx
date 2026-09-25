@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Mail, MessageCircle, Send, Clock, Check } from "lucide-react";
-import { OFFICES } from "@/lib/data";
+import { MapPin, Mail, Phone, MessageCircle, Send, Clock, Check } from "lucide-react";
+import { OFFICES, PHONE_MAIN, WHATSAPP } from "@/lib/data";
 import PageHero from "@/components/ui/PageHero";
 
 export default function ContactPage() {
@@ -130,11 +130,18 @@ export default function ContactPage() {
                     <span className="block text-sm font-medium text-ink">voltaraenergies@gmail.com</span>
                   </span>
                 </a>
-                <a href="https://wa.me/2348057295214" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-[#f0fdf4]">
+                <a href={`tel:${PHONE_MAIN}`} className="flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-gold-soft">
+                  <span className="chip h-10 w-10 rounded-xl"><Phone className="h-5 w-5" /></span>
+                  <span>
+                    <span className="block text-xs text-[#94a3b8]">Call us</span>
+                    <span className="block text-sm font-medium text-ink">{PHONE_MAIN}</span>
+                  </span>
+                </a>
+                <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-[#f0fdf4]">
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#25D366] text-white"><MessageCircle className="h-5 w-5" /></span>
                   <span>
                     <span className="block text-xs text-[#94a3b8]">WhatsApp</span>
-                    <span className="block text-sm font-medium text-ink">08057295214</span>
+                    <span className="block text-sm font-medium text-ink">{PHONE_MAIN}</span>
                   </span>
                 </a>
                 <div className="flex items-center gap-3 rounded-xl p-3">

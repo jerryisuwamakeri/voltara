@@ -6,7 +6,7 @@ import {
   Search, ShieldCheck, Check, Phone, MessageCircle,
   Zap, BatteryCharging, Star, Award, Sun, BatteryFull, Cpu, Cable,
 } from "lucide-react";
-import { PRODUCTS, WHATSAPP } from "@/lib/data";
+import { PRODUCTS, WHATSAPP, PHONE_MAIN } from "@/lib/data";
 import PageHero from "@/components/ui/PageHero";
 
 const CATEGORIES = [
@@ -194,13 +194,16 @@ export default function ProductsPage() {
               <Link href="/contact" className="btn btn-primary">
                 <ShieldCheck className="h-4 w-4" /> Get expert help
               </Link>
+              <a href={`tel:${PHONE_MAIN}`} className="btn btn-light">
+                <Phone className="h-4 w-4" /> Call us
+              </a>
               <a
                 href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hi Voltara! I need help selecting the right solar products for my home.")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-light"
               >
-                <Phone className="h-4 w-4" /> WhatsApp us
+                <MessageCircle className="h-4 w-4" /> WhatsApp us
               </a>
             </div>
           </div>

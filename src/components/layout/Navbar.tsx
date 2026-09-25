@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
-import { NAV_LINKS } from "@/lib/data";
+import { Menu, X, Phone, MessageCircle } from "lucide-react";
+import { NAV_LINKS, PHONE_MAIN, WHATSAPP } from "@/lib/data";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -86,15 +86,25 @@ export default function Navbar() {
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center gap-4">
               <a
-                href="https://wa.me/2348057295214"
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`tel:${PHONE_MAIN}`}
                 className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
                   solid ? "text-[#6b7280] hover:text-ink" : "text-white/75 hover:text-white"
                 }`}
               >
                 <Phone className="w-3.5 h-3.5" />
-                08057295214
+                {PHONE_MAIN}
+              </a>
+              <a
+                href={`https://wa.me/${WHATSAPP}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat with VOLTARA on WhatsApp"
+                className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+                  solid ? "text-[#6b7280] hover:text-ink" : "text-white/75 hover:text-white"
+                }`}
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                WhatsApp
               </a>
               <Link href="/packages" className="btn btn-primary !py-2.5 !px-5 text-sm">
                 Get Started
@@ -163,12 +173,19 @@ export default function Navbar() {
               View Solar Packages
             </Link>
             <a
-              href="https://wa.me/2348057295214"
+              href={`tel:${PHONE_MAIN}`}
+              onClick={closeMenu}
+              className="btn btn-light w-full"
+            >
+              <Phone className="w-4 h-4" /> Call · {PHONE_MAIN}
+            </a>
+            <a
+              href={`https://wa.me/${WHATSAPP}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-light w-full"
             >
-              <Phone className="w-4 h-4" /> WhatsApp · 08057295214
+              <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
             </a>
             <p className="text-center text-xs text-white/35">Mon – Sat · 8am – 6pm</p>
           </div>

@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, MessageCircle, Check, Banknote, Calendar, Home, Clock, ShieldCheck } from "lucide-react";
-import { PACKAGES, WHATSAPP } from "@/lib/data";
+import { ArrowRight, MessageCircle, Phone, Check, Banknote, Calendar, Home, Clock, ShieldCheck } from "lucide-react";
+import { PACKAGES, WHATSAPP, PHONE_MAIN } from "@/lib/data";
 import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
 
@@ -172,6 +172,9 @@ export default function FinancePage() {
                   className="btn btn-primary w-full"
                 >
                   <MessageCircle className="h-4 w-4" /> Apply now on WhatsApp
+                </a>
+                <a href={`tel:${PHONE_MAIN}`} className="btn btn-light w-full">
+                  <Phone className="h-4 w-4" /> Call {PHONE_MAIN}
                 </a>
                 <Link href="/packages" className="btn btn-light w-full">
                   Browse all packages <ArrowRight className="h-4 w-4" />
