@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Search, ShieldCheck, Check, Phone, MessageCircle,
   Zap, BatteryCharging, Star, Award, Sun, BatteryFull, Cpu, Cable,
@@ -14,6 +15,7 @@ const CATEGORIES = [
   { id: "panels", label: "Panels", fullLabel: "Solar Panels" },
   { id: "batteries", label: "Batteries", fullLabel: "Batteries" },
   { id: "inverters", label: "Inverters", fullLabel: "Inverters" },
+  { id: "generators", label: "Generators", fullLabel: "Solar Generators" },
   { id: "accessories", label: "Accessories", fullLabel: "Accessories" },
 ];
 
@@ -21,6 +23,7 @@ const CAT_ICON: Record<string, React.ElementType> = {
   panels: Sun,
   batteries: BatteryFull,
   inverters: Cpu,
+  generators: Zap,
   accessories: Cable,
 };
 
@@ -50,9 +53,9 @@ export default function ProductsPage() {
       >
         <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
           {[
-            { value: "8", label: "Products" },
+            { value: `${PRODUCTS.length}`, label: "Products" },
             { value: "25yr", label: "Panel warranty" },
-            { value: "4", label: "Categories" },
+            { value: `${CATEGORIES.length - 1}`, label: "Categories" },
             { value: "100%", label: "Certified" },
           ].map((s) => (
             <div key={s.label}>
@@ -116,10 +119,21 @@ export default function ProductsPage() {
               const CatIcon = CAT_ICON[product.category] ?? Sun;
               return (
                 <div key={product.id} className="card card-hover flex flex-col overflow-hidden">
-                  <div className="relative flex h-36 items-center justify-center bg-gold-soft">
-                    <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gold text-[#1a1205] shadow-sm">
-                      <CatIcon className="h-8 w-8" strokeWidth={1.5} />
-                    </span>
+                  <div className="relative flex h-44 items-center justify-center bg-gold-soft">
+                    {"image" in product && product.image ? (
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        quality={75}
+                        className="bg-white object-contain p-4"
+                      />
+                    ) : (
+                      <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gold text-[#1a1205] shadow-sm">
+                        <CatIcon className="h-8 w-8" strokeWidth={1.5} />
+                      </span>
+                    )}
                     {product.badge && (
                       <div className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-navy px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wide text-gold">
                         {product.badge === "Best Seller" && <Star className="h-3 w-3 fill-current" />}
@@ -143,12 +157,19 @@ export default function ProductsPage() {
                       )}
                       {"power" in product && product.power && (
                         <span className="inline-flex items-center gap-1 rounded-lg bg-gold-soft px-2 py-1 text-xs font-semibold text-gold-dark">
-                          <BatteryCharging className="h-3 w-3" /> {product.power}
+                          {product.category === "batteries" ? (
+                            <BatteryCharging className="h-3 w-3" />
+                          ) : (
+                            <Zap className="h-3 w-3" />
+                          )}
+                          {product.power}
                         </span>
                       )}
-                      <span className="inline-flex items-center gap-1 rounded-lg bg-[#f0fdf4] px-2 py-1 text-xs font-semibold text-[#16a34a]">
-                        <ShieldCheck className="h-3 w-3" /> {product.warranty}
-                      </span>
+                      {"warranty" in product && product.warranty && (
+                        <span className="inline-flex items-center gap-1 rounded-lg bg-[#f0fdf4] px-2 py-1 text-xs font-semibold text-[#16a34a]">
+                          <ShieldCheck className="h-3 w-3" /> {product.warranty}
+                        </span>
+                      )}
                     </div>
 
                     <ul className="mb-5 flex-1 space-y-1.5">
@@ -162,11 +183,15 @@ export default function ProductsPage() {
 
                     <div className="flex items-center justify-between gap-2 border-t border-[#eef1f5] pt-4">
                       <div>
-                        <div className="text-[0.65rem] font-medium uppercase tracking-wide text-[#94a3b8]">From</div>
-                        <div className="display text-lg text-ink">₦{product.price}</div>
+                        <div className="text-[0.65rem] font-medium uppercase tracking-wide text-[#94a3b8]">
+                          {product.price ? "From" : "Price"}
+                        </div>
+                        <div className="display text-lg text-ink">
+                          {product.price ? `₦${product.price}` : "On request"}
+                        </div>
                       </div>
                       <a
-                        href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hello Voltara!\n\nI'd like a quote for:\n*${product.name}* (${product.type})\nPrice: ₦${product.price}\n\nPlease contact me with availability and purchase details. Thank you!`)}`}
+                        href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hello Voltara!\n\nI'd like a quote for:\n*${product.name}* (${product.type})${product.price ? `\nPrice: ₦${product.price}` : ""}\n\nPlease contact me with availability and purchase details. Thank you!`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-dark !px-4 !py-2.5 text-xs"
